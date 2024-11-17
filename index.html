@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Center</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>IT Computer Studies</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Courses</a>
+                    <div class="dropdown-content">
+                        <a href="#">HTML & CSS Basics</a>
+                        <a href="#">JavaScript Programming</a>
+                        <a href="#">Python Programming</a>
+                        <a href="#">Database Management</a>
+                        <a href="#">Web Development</a>
+                        <a href="#">MS Office</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Student Resources</a>
+                    <div class="dropdown-content">
+                        <a href="https://itcs-deoria.github.io/itcs-login/">Student Login</a>
+                        <a href="#">Study Materials</a>
+                        <a href="#">Assignments</a>
+                        <a href="#">Practice Tests</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Certifications</a>
+                    <div class="dropdown-content">
+                        <a href="#">Validate Certificate</a>
+                        <a href="#">Request Certificate</a>
+                        <a href="#">Download Certificate</a>
+                    </div>
+                </li>
+                <li><a href="#about-us">About Us</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="syllabus">
+        <h2>Course Syllabus</h2>
+        <ul>
+            <li>Course 1: HTML & CSS Basics</li>
+            <li>Course 2: JavaScript Programming</li>
+            <li>Course 3: Python Programming</li>
+            <li>Course 4: Database Management Systems</li>
+        </ul>
+    </section>
+
+    <section id="certificate-validation">
+        <h2>Validate Your Certificate</h2>
+        <form id="certificate-form">
+            <label for="certificate-id">Certificate ID:</label>
+            <input type="text" id="certificate-id" required>
+            <label for="certificate-password">Password:</label>
+            <input type="password" id="certificate-password" required>
+            <button type="submit">Validate</button>
+        </form>
+        <div id="validation-message"></div>
+    </section
