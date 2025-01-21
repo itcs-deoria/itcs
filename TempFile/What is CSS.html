@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is CSS?</title>
+</head>
+<body>
+  <h1>What is CSS?</h1>
+
+  <h2>Definition and Purpose of CSS in Web Development</h2>
+  <p>Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML (including various XML-based languages). CSS defines how HTML elements should be displayed on screens, paper, or in other media.</p>
+  <p>The primary purpose of CSS is to separate content from design, allowing developers to control layout, colors, fonts, and overall aesthetics of web pages efficiently.</p>
+
+  <h3>Benefits of CSS</h3>
+  <ul>
+    <li>Improved Design Control: CSS allows for precise control over the layout and appearance of web pages, enabling developers to create visually appealing designs.</li>
+    <li>Time Efficiency: By using external stylesheets, developers can change the appearance of an entire website by modifying a single CSS file, saving significant time compared to changing styles in multiple HTML files.</li>
+    <li>Responsive Design: CSS facilitates responsive web design, allowing websites to adapt their layout and styling based on different screen sizes and devices.</li>
+    <li>Maintenance Ease: Changes can be made globally across a site without needing to edit each page individually, simplifying website maintenance.</li>
+  </ul>
+
+  <h2>Differences Between HTML and CSS</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>HTML</th>
+        <th>CSS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Purpose</td>
+        <td>Structure content</td>
+        <td>Style and layout content</td>
+      </tr>
+      <tr>
+        <td>Syntax</td>
+        <td>Uses tags (e.g., &lt;h1&gt;, &lt;p&gt;)</td>
+        <td>Uses rules (e.g., color: blue;)</td>
+      </tr>
+      <tr>
+        <td>Focus</td>
+        <td>Content organization</td>
+        <td>Visual presentation</td>
+      </tr>
+      <tr>
+        <td>File Type</td>
+        <td>.html files</td>
+        <td>.css files</td>
+      </tr>
+      <tr>
+        <td>Flexibility</td>
+        <td>Limited styling options</td>
+        <td>Extensive styling capabilities</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>How to Include CSS</h2>
+  <p>There are three main methods for including CSS in web development:</p>
+  <ul>
+    <li>Inline Styles: CSS styles applied directly within HTML elements using the <code>style</code> attribute.</li>
+    <li>Internal Stylesheets: CSS styles included within a <code>&lt;style&gt;</code> tag in the <code>&lt;head&gt;</code> section of an HTML document.</li>
+    <li>External Stylesheets: CSS styles written in a separate file with a <code>.css</code> extension and linked to an HTML document using a <code>&lt;link&gt;</code> tag.</li>
+  </ul>
+
+  <h3>Examples</h3>
+  <p><strong>Inline Styles:</strong></p>
+  <pre>&lt;p style="color: blue; font-size: 20px;"&gt;This is an inline styled paragraph.&lt;/p&gt;</pre>
+  <p><strong>Internal Stylesheet:</strong></p>
+  <pre>
+&lt;style&gt;
+  p {
+    color: green;
+    font-size: 18px;
+  }
+&lt;/style&gt;
+  </pre>
+  <p><strong>External Stylesheet:</strong></p>
+  <pre>
+&lt;link rel="stylesheet" href="styles.css"&gt;
+  </pre>
+</body>
+</html>
