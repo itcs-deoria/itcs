@@ -21,3 +21,21 @@ document.getElementById('certificate-form').addEventListener('submit', function(
         validationMessage.style.color = 'red';
     }
 });
+ // Disable right-click menu
+    document.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+  
+    });
+
+    // Disable common developer tool shortcuts
+    document.addEventListener("keydown", (event) => {
+      if (
+        (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J" || event.key === "C")) || // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        (event.ctrlKey && event.key === "U") || // Ctrl+U (View Source)
+        event.key === "F12" // F12
+      ) {
+        event.preventDefault();
+   
+      }
+    });
+
