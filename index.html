@@ -92,6 +92,26 @@
 
     
 </body>
+    <style>
+         // Disable right-click menu
+    document.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      alert("Right-click is disabled.");
+    });
+
+    // Disable common developer tool shortcuts
+    document.addEventListener("keydown", (event) => {
+      if (
+        (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J" || event.key === "C")) || // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        (event.ctrlKey && event.key === "U") || // Ctrl+U (View Source)
+        event.key === "F12" // F12
+      ) {
+        event.preventDefault();
+        alert("Developer tools are disabled.");
+      }
+    });
+
+    </style>
 </html>
 
 
