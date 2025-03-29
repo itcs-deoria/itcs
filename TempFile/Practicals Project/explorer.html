@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Computer Studies | Saturday Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        /* Header with Gradient */
+        header {
+            background: linear-gradient(45deg, #007bff, #ff01a2);
+            color: white;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        main {
+            margin: 50px auto;
+        }
+
+        .btn {
+            display: block;
+            width: 250px;
+            margin: 15px auto;
+            padding: 12px;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(90deg, #28a745, #218838);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #218838, #1e7e34);
+        }
+        h3{
+            margin-top: 20px;
+            margin-bottom: 0px;
+        }
+        main{
+            margin-top:0px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        IT Computer Studies
+    </header>
+    <h3> Saturday Projects</h3>
+    <main>
+        <button class="btn" onclick="exploreProject('excel_project.html')">📂 Excel Project</button>
+        <button class="btn" onclick="exploreProject('coreldraw_project.html')">🎨  CorelDRAW Project</button>
+        <button class="btn" onclick="exploreProject('programming_project.html')">💻  Programming Project</button>
+        <button class="btn" onclick="exploreProject('new_student_project.html')">📜 New Student Project</button>
+    </main>
+
+    <script>
+        function exploreProject(url) {
+            window.open(url, "_blank"); // Opens in new tab
+        }
+    </script>
+
+</body>
+</html>

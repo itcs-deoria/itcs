@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Salary Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding-bottom: 50px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            min-width: 600px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #333;
+            color: white;
+        }
+        .summary-row {
+            background: #ffd700 !important; /* Yellow */
+            font-weight: bold;
+        }
+        .stats-row {
+            background: #87ceeb !important; /* Light Blue */
+            font-weight: bold;
+        }
+        .calculate-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .calculate-btn:hover {
+            background: #0056b3;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📊 Employee Salary Calculator</h1>
+
+    <div class="table-container">
+        <table id="salaryTable">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Present Days</th>
+                    <th>Absent Days</th>
+                    <th>Total Working Days</th>
+                    <th>Salary Per Day (₹)</th>
+                    <th>Total Salary (₹)</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <button class="calculate-btn" onclick="verifyPassword()">See The Answer</button>
+
+    <script>
+        const employees = [
+            ["Aman", 22, 6, 28, 500], ["Riya", 25, 3, 28, 450], ["Sohan", 20, 8, 28, 550],
+            ["Meenal", 27, 1, 28, 600], ["Vikas", 18, 10, 28, 400], ["Rohit", 24, 4, 28, 520],
+            ["Anjali", 26, 2, 28, 480], ["Karan", 23, 5, 28, 530], ["Neha", 21, 7, 28, 490],
+            ["Sumit", 19, 9, 28, 470], ["Priya", 28, 0, 28, 610], ["Arjun", 22, 6, 28, 540],
+            ["Divya", 25, 3, 28, 500], ["Sahil", 20, 8, 28, 510], ["Kavita", 27, 1, 28, 550],
+            ["Yash", 18, 10, 28, 460], ["Manish", 24, 4, 28, 530], ["Sneha", 26, 2, 28, 520],
+            ["Mohit", 23, 5, 28, 490], ["Pooja", 21, 7, 28, 480], ["Tarun", 20, 8, 28, 500],
+            ["Jyoti", 25, 3, 28, 550], ["Vivek", 18, 10, 28, 400], ["Nidhi", 26, 2, 28, 600],
+            ["Aakash", 23, 5, 28, 530], ["Preeti", 20, 8, 28, 480], ["Rahul", 24, 4, 28, 520],
+            ["Shivani", 27, 1, 28, 550], ["Gaurav", 19, 9, 28, 490], ["Monika", 21, 7, 28, 510],
+            ["Vikas", 22, 6, 28, 460], ["Simran", 28, 0, 28, 600], ["Deepak", 24, 4, 28, 530],
+            ["Rashmi", 25, 3, 28, 500], ["Harsh", 18, 10, 28, 450], ["Sneha", 26, 2, 28, 520],
+            ["Abhishek", 23, 5, 28, 490], ["Kritika", 21, 7, 28, 480], ["Nitin", 20, 8, 28, 500],
+            ["Ayesha", 27, 1, 28, 550], ["Rohan", 25, 3, 28, 500], ["Sanya", 18, 10, 28, 460],
+            ["Varun", 22, 6, 28, 520], ["Priyanka", 19, 9, 28, 490], ["Vivek", 24, 4, 28, 510]
+        ];
+
+        const tableBody = document.getElementById('tableBody');
+
+        employees.forEach(emp => {
+            let row = `<tr>
+                <td>${emp[0]}</td>
+                <td>${emp[1]}</td>
+                <td>${emp[2]}</td>
+                <td>${emp[3]}</td>
+                <td>₹${emp[4]}</td>
+                <td class="totalSalary">?</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+
+        function verifyPassword() {
+            let password = prompt("🔑 Enter Password to View Salaries:");
+            if (password === "9919916995") {
+                calculateSalary();
+            } else {
+                alert("❌ Incorrect Password! Try Again.");
+            }
+        }
+
+        function calculateSalary() {
+            let salaryCells = document.querySelectorAll('.totalSalary');
+            let totalSalaries = [];
+
+            employees.forEach((emp, index) => {
+                let totalSalary = emp[1] * emp[4]; // Present Days × Salary Per Day
+                totalSalaries.push(totalSalary);
+                salaryCells[index].innerText = `₹${totalSalary}`;
+            });
+
+            let maxSalary = Math.max(...totalSalaries);
+            let minSalary = Math.min(...totalSalaries);
+            let avgSalary = (totalSalaries.reduce((a, b) => a + b, 0) / totalSalaries.length).toFixed(2);
+            let totalEmployees = employees.length;
+
+            updateSummaryRow(maxSalary, minSalary);
+            updateStatsRow(avgSalary, totalEmployees);
+        }
+
+        function updateSummaryRow(maxSalary, minSalary) {
+            document.getElementById("salaryTable").insertAdjacentHTML("beforeend",
+                `<tr class="summary-row">
+                    <td colspan="4"><strong>🔹 Summary</strong></td>
+                    <td>Max Salary: ₹${maxSalary}</td>
+                    <td>Min Salary: ₹${minSalary}</td>
+                </tr>`
+            );
+        }
+
+        function updateStatsRow(avgSalary, totalEmployees) {
+            document.getElementById("salaryTable").insertAdjacentHTML("beforeend",
+                `<tr class="stats-row">
+                    <td colspan="4"><strong>📈 Statistics</strong></td>
+                    <td>Avg Salary: ₹${avgSalary}</td>
+                    <td>Total Employees: ${totalEmployees}</td>
+                </tr>`
+            );
+        }
+    </script>
+
+</body>
+</html>
