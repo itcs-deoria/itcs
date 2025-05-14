@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Offer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .course-container {
+      background: white;
+      padding: 20px;
+      max-width: 650px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    .course-container img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .course-container h2 {
+      margin-top: 15px;
+    }
+
+    .price-section {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    .price-section del {
+      color: red;
+      margin-right: 10px;
+    }
+
+    .coupons {
+      margin-top: 20px;
+    }
+
+    .coupons label {
+      display: block;
+      margin: 5px 0;
+    }
+
+    .final-price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="course-container">
+    <img src="https://via.placeholder.com/600x300?text=CSS+Premium+Course" alt="Course Image">
+    <h2>CSS Premium Course</h2>
+    <p>Join our advanced CSS Premium Series with real-world projects and expert mentorship!</p>
+    
+    <div class="price-section">
+      <del>₹500</del>
+      <span>₹500</span>
+    </div>
+
+    <div class="coupons">
+      <h4>Apply Coupon Codes:</h4>
+      <label><input type="checkbox" value="speed" /> Speed Join (25%)</label>
+      <label><input type="checkbox" value="regular" /> Regular Student (15%)</label>
+      <label><input type="checkbox" value="notes" /> Notes Complete (10%)</label>
+      <label><input type="checkbox" value="birthday" /> Birthday Discount (10%)</label>
+      <label><input type="checkbox" value="exam" /> Exam Topper (20%)</label>
+      <label><input type="checkbox" value="practical" /> Practical Topper (20%)</label>
+    </div>
+
+    <div class="final-price">
+      Final Price: ₹<span id="finalPrice">500</span>
+    </div>
+  </div>
+
+  <script>
+    const basePrice = 500;
+    const discounts = {
+      speed: 25,
+      regular: 15,
+      notes: 10,
+      birthday: 10,
+      exam: 20,
+      practical: 20
+    };
+
+    const checkboxes = document.querySelectorAll('.coupons input[type="checkbox"]');
+    const finalPriceDisplay = document.getElementById('finalPrice');
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', calculateFinalPrice);
+    });
+
+    function calculateFinalPrice() {
+      let totalDiscount = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          totalDiscount += discounts[cb.value];
+        }
+      });
+
+      if (totalDiscount > 100) totalDiscount = 100; // Max 100% discount allowed
+
+      const discountedPrice = basePrice - (basePrice * totalDiscount / 100);
+      finalPriceDisplay.textContent = discountedPrice.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>
