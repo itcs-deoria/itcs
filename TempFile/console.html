@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tally Login</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Calibri, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background-color: #fff;
+      border: 2px solid #004080;
+      padding: 30px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 0 10px #999;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 10px;
+    }
+
+    .datetime {
+      font-size: 14px;
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #aaa;
+    }
+
+    .toggle {
+      font-size: 12px;
+      color: #004080;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    button {
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+    }
+
+    .error {
+      margin-top: 20px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .timer {
+      color: red;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Tally Prime - Login</h2>
+    <div class="datetime" id="datetime"></div>
+
+    <input id="value" type="password" placeholder="Enter Password" />
+    <span class="toggle" onclick="togglePassword()">👁 Show/Hide Password</span>
+    <br>
+    <button onclick="abc()">Submit</button>
+    <div id="output"></div>
+    <div id="timer" class="timer"></div>
+  </div>
+
+  <script>
+    const correctPassword = "1234";
+    const maxAttempts = 3;
+    let attempts = parseInt(localStorage.getItem("attempts")) || 0;
+    let lockCount = parseInt(localStorage.getItem("lockCount")) || 0;
+    let lockUntil = parseInt(localStorage.getItem("lockUntil")) || 0;
+
+    // Show current date-time
+    document.getElementById("datetime").innerText = new Date().toLocaleString();
+
+    function abc() {
+      const now = Date.now();
+      const output = document.getElementById("output");
+      const timer = document.getElementById("timer");
+
+      // Check if user is locked
+      if (lockUntil > now) {
+        output.innerHTML = '<div class="error">⛔ Login is temporarily locked.</div>';
+        startCountdown(lockUntil - now);
+        return;
+      }
+
+      const input = document.getElementById("value").value;
+
+      if (input === correctPassword) {
+        localStorage.clear();
+        output.innerHTML = '<div class="result">✔ Access Granted. <a href="https://www.google.com" target="_blank">Go to Dashboard</a></div>';
+        timer.innerText = "";
+      } else {
+        attempts++;
+        localStorage.setItem("attempts", attempts);
+        output.innerHTML = `<div class="error">❌ Wrong Password. Attempt ${attempts} of ${maxAttempts}</div>`;
+
+        if (attempts >= maxAttempts) {
+          // Lock system
+          lockCount++;
+          const waitMinutes = 5 * lockCount;
+          const lockDuration = waitMinutes * 60 * 1000;
+          const newLockUntil = Date.now() + lockDuration;
+          localStorage.setItem("lockUntil", newLockUntil);
+          localStorage.setItem("lockCount", lockCount);
+          localStorage.setItem("attempts", 0); // Reset attempts after lock
+          attempts = 0;
+
+          output.innerHTML = `<div class="error">⛔ Too many wrong attempts. Try again in ${waitMinutes} minutes.</div>`;
+          startCountdown(lockDuration);
+        }
+      }
+    }
+
+    function togglePassword() {
+      const input = document.getElementById("value");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function startCountdown(ms) {
+      const timer = document.getElementById("timer");
+      let seconds = Math.floor(ms / 1000);
+
+      const interval = setInterval(() => {
+        const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        timer.innerText = `⏳ Please wait: ${mins}:${secs}`;
+
+        if (seconds <= 0) {
+          clearInterval(interval);
+          timer.innerText = "";
+          localStorage.setItem("lockUntil", "0");
+        }
+
+        seconds--;
+      }, 1000);
+    }
+
+    // On page load, check if locked
+    if (lockUntil > Date.now()) {
+      startCountdown(lockUntil - Date.now());
+      document.getElementById("output").innerHTML = '<div class="error">⛔ Login is temporarily locked.</div>';
+    }
+  </script>
+
+</body>
+</html>
