@@ -68,7 +68,7 @@
 
 <div class="box hidden" id="questionBox">
   <div class="question-count" id="counter"></div>
-  <div class="timer">⏳ Time Left: <span id="timeLeft">180</span> seconds</div>
+  <div class="timer">⏳ Time Left: <span id="timeLeft">300</span> seconds</div>
   <h2 id="companyTitle"></h2>
   <div id="details"></div>
   <button class="btn" onclick="nextCompany()" id="nextBtn">✅ Done, Show Next</button>
@@ -467,7 +467,7 @@
 
  
   let current = localStorage.getItem('current') ? parseInt(localStorage.getItem('current')) : 0;
-  let time = localStorage.getItem('time') ? parseInt(localStorage.getItem('time')) : 180;
+  let time = localStorage.getItem('time') ? parseInt(localStorage.getItem('time')) : 300;
   let timer;
 
   function checkPassword() {
@@ -527,7 +527,7 @@
   function nextCompany() {
     clearInterval(timer);
     current++;
-    time = 180;
+    time = 300;
     localStorage.setItem('current', current);
     localStorage.setItem('time', time);
     showCompany();
