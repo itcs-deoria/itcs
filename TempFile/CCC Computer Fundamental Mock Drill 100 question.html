@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px; 
+            margin: auto;
+            padding: 20px;
+        }
+        .form-section, .exam-section, .result-section {
+            display: none;
+        }
+        .form-section.active, .exam-section.active, .result-section.active {
+            display: block;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question-section {
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #fe4f4f, #001cfe);
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button {
+    background: #ff00b9;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.status {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.question-section {
+    margin: 20px 0;
+    background: #000000;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+    font-size: 22px;
+}
+
+.question-section h3 {
+    color: yellow;
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.buttons {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.buttons button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.result-section {
+    text-align: center;
+}
+
+.result-section p {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .timer {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .question-section {
+        padding: 15px;
+    }
+}
+/* Modal styles */
+#cheating-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    overflow: auto;
+}
+
+#cheating-modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+#cheating-modal h2 {
+    color: #ff0000;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#cheating-modal p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#cheating-modal button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #ff00b9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cheating-modal button:hover {
+    background: #0056b3;
+}
+#result-details{
+    text-align: left;
+   align-content: center;
+}
+
+
+    </style>
+</head> 
+<body>
+    <div class="container">
+        <div class="form-section active" id="form-section">
+        
+            <h2>Student Login</h2>
+           
+            <h2 style="color:red;" ><marquee behavior="alternet" direction="right" >CCC Mock Drill Test</marquee> </h2>
+          
+            <form id="login-form">
+                <label for="student-id">🆔 Student ID:  (if you don't have use this:"1001")</label><br>
+                <input type="number" id="student-id" required placeholder="Enter your ID Card Number" title="I-Card Number"><br><br>
+                <label for="student-name">👨‍🎓 Student Name:</label><br>
+                <input type="text" id="student-name" required placeholder="Enter your Full Name" title="Enter Your Name"><br><br>
+                <label for="exam-code">📝 Exam Code: (itcsCCC)</label><br>
+                <input type="password" id="exam-code" required placeholder="Enter Exam Code" title="Ask Teacher for the Code"><br><br>
+                <button type="submit">🚀 Start Exam 🚀</button>
+            </form>
+        </div>
+        <div class="exam-section" id="exam-section">
+            <div class="timer" id="timer">Time Left: ⏳ 00:00:00</div>
+            <div class="status">
+                Total Questions: <span id="total-questions"></span>, Attempted: <span id="attempted-questions">0</span>
+            </div>
+            <h2>CCC Exam Test "IT Computer Studies"</h2>
+            <h2 style="color: red;"><marquee behavior="alternet">CCC Mock Drill Test</marquee></h2>
+            <div class="question-section" id="question-section"></div>
+            <div class="buttons">
+                <button id="prev-btn">Previous</button>
+                <button id="next-btn">Next</button>
+                <button id="submit-btn" style="display:none;">Submit</button>
+            </div>
+        </div>
+        <div class="result-section" id="result-section">
+            <h2>🎓 Exam Result 🎓</h2>
+            <div id="result-details"></div>
+            <div id="verification-section">
+                <label for="verification-code">Enter Verification Code to View Answer Sheet: (For code ask to Teacher )</label>
+                <input type="password" id="verification-code" placeholder="Enter Code" />
+                <button id="verify-code-btn">Verify</button>
+                <p id="verification-error" style="color: red; display: none;">Invalid Code! Please try again.</p>
+            </div>
+            <div id="answersheet-section" style="display: none;">
+                <h3 style="color:yellow">Your Answer Sheet:</h3>
+                <ul id="answersheet-content"></ul>
+                <button id="download-btn">Download Answer Sheet</button>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Modal HTML -->
+<div id="cheating-modal">
+    <div class="modal-content">
+        <h2>📱👀💻Cheating Detected📱👀💻</h2>
+        <p id="cheating-content">If this happens again, it will be your last warning. After this, your exam will be auto-submitted..</p>
+        <button id="cheating-ok-btn">OK</button>
+    </div>
+</div>
+
+    <script>
+    const questions = [
+  { "question": "Computer का मस्तिष्क किसे कहा जाता है?", "options": ["Monitor", "CPU", "Mouse", "Keyboard"], "correct": 1 },
+  { "question": "CD-ROM का फुल फॉर्म क्या है?", "options": ["Compact Disk Read Only Memory", "Computer Disk Random Only Memory", "Central Disk Read Only Memory", "Control Disk Read Only Memory"], "correct": 0 },
+  { "question": "Bit और Byte में कौन बड़ा होता है?", "options": ["Bit", "Byte", "दोनों समान", "कोई नहीं"], "correct": 1 },
+  { "question": "Computer में Input device कौन सा है?", "options": ["Printer", "Monitor", "Keyboard", "Speaker"], "correct": 2 },
+  { "question": "Output Device कौन सा है?", "options": ["Monitor", "Keyboard", "Mouse", "Scanner"], "correct": 0 },
+  { "question": "RAM का फुल फॉर्म क्या है?", "options": ["Read Access Memory", "Random Access Memory", "Read Only Memory", "Rapid Access Memory"], "correct": 1 },
+  { "question": "Computer के जनक कौन हैं?", "options": ["Bill Gates", "Steve Jobs", "Charles Babbage", "Alan Turing"], "correct": 2 },
+  { "question": "Hard Disk किसका उदाहरण है?", "options": ["Input Device", "Storage Device", "Output Device", "Processing Device"], "correct": 1 },
+  { "question": "ROM का फुल फॉर्म क्या है?", "options": ["Read Over Memory", "Read Only Memory", "Random Only Memory", "Run Only Memory"], "correct": 1 },
+  { "question": "कौन-सा हार्डवेयर है?", "options": ["MS Word", "Windows", "Keyboard", "Paint"], "correct": 2 },
+  { "question": "Scanner क्या है?", "options": ["Input Device", "Output Device", "Storage Device", "Processing Device"], "correct": 0 },
+  { "question": "WWW का फुल फॉर्म क्या है?", "options": ["World Web Wide", "World Wide Web", "Wide Web World", "Web World Wide"], "correct": 1 },
+  { "question": "CPU का कार्य क्या है?", "options": ["इनपुट देना", "आउटपुट दिखाना", "Processing करना", "डाटा सेव करना"], "correct": 2 },
+  { "question": "Mouse किसका उदाहरण है?", "options": ["Input Device", "Output Device", "Storage", "None"], "correct": 0 },
+  { "question": "कौन-सा Software है?", "options": ["Monitor", "Keyboard", "MS Excel", "Mouse"], "correct": 2 },
+  { "question": "Full form of USB?", "options": ["Universal Serial Bus", "United Service Board", "Universal Service Bus", "United Serial Bus"], "correct": 0 },
+  { "question": "LAN का पूरा नाम क्या है?", "options": ["Local Area Network", "Large Area Network", "Limited Area Network", "Linked Area Network"], "correct": 0 },
+  { "question": "Internet चलाने के लिए क्या जरूरी है?", "options": ["Keyboard", "Scanner", "Modem", "Printer"], "correct": 2 },
+  { "question": "Computer Viruses होते हैं?", "options": ["Hardware", "Software", "Application", "Programs"], "correct": 3 },
+  { "question": "Data को temporarily कहाँ store किया जाता है?", "options": ["Hard Disk", "ROM", "RAM", "Pen Drive"], "correct": 2 },
+  { "question": "Ctrl + S का उपयोग किसके लिए होता है?", "options": ["Open करने के लिए", "Print करने के लिए", "Save करने के लिए", "Close करने के लिए"], "correct": 2 },
+  { "question": "Computer Booting क्या है?", "options": ["Shutdown करना", "Print करना", "System को Start करना", "Software को Run करना"], "correct": 2 },
+  { "question": "MS-DOS क्या है?", "options": ["GUI OS", "Application", "Command-based OS", "Driver"], "correct": 2 },
+  { "question": "Delete किए गए फाइल कहाँ जाते हैं?", "options": ["Hard Disk", "RAM", "Recycle Bin", "Desktop"], "correct": 2 },
+  { "question": "ALU का कार्य क्या है?", "options": ["Storage", "Calculation", "Control", "Typing"], "correct": 1 },
+  { "question": "Software दो प्रकार के होते हैं:", "options": ["Hardware और Application", "Application और System", "Input और Output", "None"], "correct": 1 },
+  { "question": "Operating System का कार्य है?", "options": ["Document बनाना", "System को चलाना", "Print करना", "Save करना"], "correct": 1 },
+  { "question": "Binary संख्या किस पर आधारित होती है?", "options": ["Base 2", "Base 8", "Base 10", "Base 16"], "correct": 0 },
+  { "question": "1 Byte में कितने Bits होते हैं?", "options": ["4", "8", "16", "2"], "correct": 1 },
+  { "question": "Firewall किससे सुरक्षा देता है?", "options": ["Virus", "Hackers", "Power Failure", "Dust"], "correct": 1 },
+
+];
+questions.push(
+  { "question": "Computer में data को स्थायी रूप से कहाँ संग्रहित किया जाता है?", "options": ["RAM", "Cache", "ROM", "Hard Disk"], "correct": 3 },
+  { "question": "CTRL + P का उपयोग किस लिए किया जाता है?", "options": ["Paste", "Print", "Power Off", "Pause"], "correct": 1 },
+  { "question": "ISP का मतलब क्या है?", "options": ["Internet Speed Provider", "Indian Service Provider", "Internet Service Provider", "Internal Server Protocol"], "correct": 2 },
+  { "question": "Google Chrome किसका उदाहरण है?", "options": ["Operating System", "Browser", "Hardware", "Application Software"], "correct": 1 },
+  { "question": "Cache Memory का कार्य क्या होता है?", "options": ["Temporary Storage", "Permanent Storage", "Input Control", "Monitor Display"], "correct": 0 },
+  { "question": "Scanner किसका उदाहरण है?", "options": ["Input Device", "Output Device", "Storage", "Software"], "correct": 0 },
+  { "question": "Ctrl + X किसके लिए है?", "options": ["Copy", "Paste", "Cut", "Save"], "correct": 2 },
+  { "question": "Software और Hardware को जोड़ने का कार्य कौन करता है?", "options": ["User", "ROM", "Operating System", "Monitor"], "correct": 2 },
+  { "question": "Floppy Disk किसका उदाहरण है?", "options": ["Output Device", "Storage Device", "Input Device", "None"], "correct": 1 },
+  { "question": "Laptop एक प्रकार का क्या है?", "options": ["Mainframe", "Mini Computer", "Notebook Computer", "Server"], "correct": 2 },
+  { "question": "Computer में Instructions के समूह को क्या कहते हैं?", "options": ["Hardware", "Software", "Processor", "File"], "correct": 1 },
+  { "question": "Computer में सबसे तेज़ Memory कौन सी है?", "options": ["Hard Disk", "RAM", "Cache", "Pen Drive"], "correct": 2 },
+  { "question": "Which one is not a binary number?", "options": ["1001", "1010", "1020", "1100"], "correct": 2 },
+  { "question": "Which is not a function of Operating System?", "options": ["Memory Management", "File Management", "User Interface", "Printing Document"], "correct": 3 },
+  { "question": "Touch Screen क्या है?", "options": ["Input", "Output", "Both Input and Output", "None"], "correct": 2 },
+  { "question": "Computer में 'Control Unit' का कार्य क्या है?", "options": ["Data Store करना", "Processing करना", "Instructions को नियंत्रित करना", "Display करना"], "correct": 2 },
+  { "question": "Dot Matrix Printer किस प्रकार का प्रिंटर है?", "options": ["Laser", "Inkjet", "Impact", "Thermal"], "correct": 2 },
+  { "question": "First generation computer में कौन-सी टेक्नोलॉजी का प्रयोग हुआ?", "options": ["Transistor", "IC", "Vacuum Tubes", "Microprocessor"], "correct": 2 },
+  { "question": "Compiler किस प्रकार का Software है?", "options": ["System Software", "Application Software", "Utility Software", "Driver"], "correct": 0 },
+  { "question": "MS Windows क्या है?", "options": ["Input Device", "Application Software", "Operating System", "Output Device"], "correct": 2 },
+  { "question": "कौन-सा Open Source Operating System है?", "options": ["Windows", "Linux", "DOS", "macOS"], "correct": 1 },
+  { "question": "Computer को चालू करने की प्रक्रिया को क्या कहते हैं?", "options": ["Start", "Execute", "Booting", "Install"], "correct": 2 },
+  { "question": "MS Excel क्या है?", "options": ["Word Processor", "Spreadsheet Software", "Presentation Software", "Graphics Software"], "correct": 1 },
+  { "question": "Computer Virus क्या है?", "options": ["Hardware Problem", "Software Program", "Electric Shock", "Network Device"], "correct": 1 },
+  { "question": "UPS का कार्य क्या है?", "options": ["Internet Provide करना", "Power Backup देना", "Printing करना", "Data Process करना"], "correct": 1 },
+  { "question": "Scanner क्या करता है?", "options": ["Print", "Scan", "Display", "Type"], "correct": 1 },
+  { "question": "Monitor को क्या कहा जाता है?", "options": ["VDU", "CPU", "USB", "CDU"], "correct": 0 },
+  { "question": "Computer की Speed मापी जाती है?", "options": ["Kg में", "MHz में", "RPM में", "Mbps में"], "correct": 1 },
+  { "question": "Full form of HTML?", "options": ["Hypertext Markup Language", "Hyper Transfer Machine Language", "Hyperlink Text Markup Language", "None"], "correct": 0 },
+  { "question": "कौन सा एक Browser नहीं है?", "options": ["Chrome", "Firefox", "Opera", "Photoshop"], "correct": 3 }
+);
+questions.push(
+  { "question": "Email भेजने के लिए किसकी आवश्यकता होती है?", "options": ["Modem", "Scanner", "Email ID", "Printer"], "correct": 2 },
+  { "question": "Windows में File को Delete करने के बाद कहाँ जाता है?", "options": ["Desktop", "RAM", "Recycle Bin", "My Documents"], "correct": 2 },
+  { "question": "Touchpad किस डिवाइस में अधिकतर पाया जाता है?", "options": ["Desktop", "Tablet", "Laptop", "Monitor"], "correct": 2 },
+  { "question": "Computer में कौन-सा Storage Device नहीं है?", "options": ["Hard Disk", "Pen Drive", "RAM", "Monitor"], "correct": 3 },
+  { "question": "IP Address किससे जुड़ा होता है?", "options": ["Hardware", "Internet", "Printer", "MS Word"], "correct": 1 },
+  { "question": "Operating System का उदाहरण क्या है?", "options": ["MS Paint", "MS Word", "Windows 10", "Photoshop"], "correct": 2 },
+  { "question": "कौन-सा डिवाइस आउटपुट देता है?", "options": ["Scanner", "Keyboard", "Monitor", "Mouse"], "correct": 2 },
+  { "question": "File Extension '.exe' किसके लिए होता है?", "options": ["Text File", "Executable File", "Image File", "Spreadsheet File"], "correct": 1 },
+  { "question": "कोई Folder या File Rename कैसे की जाती है?", "options": ["F5", "F2", "Ctrl + R", "Alt + R"], "correct": 1 },
+  { "question": "URL का पूरा नाम क्या है?", "options": ["Universal Research Link", "Uniform Resource Locator", "Unique Reference Link", "User Requested Link"], "correct": 1 },
+  { "question": "Default browser shortcut क्या है?", "options": ["Ctrl + B", "Windows + B", "Windows + E", "Windows + R"], "correct": 3 },
+  { "question": "किस पीढ़ी के कंप्यूटर में माइक्रोप्रोसेसर का उपयोग हुआ?", "options": ["First", "Second", "Third", "Fourth"], "correct": 3 },
+  { "question": "CPU में कौन-कौन से यूनिट होते हैं?", "options": ["Input और Output", "ALU और CU", "Keyboard और Monitor", "Mouse और Scanner"], "correct": 1 },
+  { "question": "Linux किस प्रकार का Operating System है?", "options": ["Licensed", "Open Source", "Paid", "None"], "correct": 1 },
+  { "question": "HTTP का फुल फॉर्म क्या है?", "options": ["Hyper Text Transfer Protocol", "High Transfer Text Protocol", "Hyperlink Transfer Text Page", "Hyper Tool Transfer Process"], "correct": 0 },
+  { "question": "URL किसका हिस्सा है?", "options": ["Operating System", "Web Browser", "Hardware", "Printer"], "correct": 1 },
+  { "question": "Which is not an input device?", "options": ["Joystick", "Light Pen", "Printer", "Mouse"], "correct": 2 },
+  { "question": "Software का कार्य है?", "options": ["Data input करना", "User interface प्रदान करना", "Electricity देना", "Hardware जोड़ना"], "correct": 1 },
+  { "question": "Storage capacity को किसमें मापा जाता है?", "options": ["Kg", "Liter", "Inch", "GB"], "correct": 3 },
+  { "question": "Binary System में कितने अंक होते हैं?", "options": ["2", "8", "10", "16"], "correct": 0 },
+  { "question": "NIC का फुल फॉर्म क्या है?", "options": ["Network Internet Card", "Network Interface Card", "New Internet Connector", "National Interface Card"], "correct": 1 },
+  { "question": "Mainframe Computer का उपयोग कहाँ होता है?", "options": ["घर में", "छोटे कार्यालय में", "बड़ी कंपनियों/बैंक में", "स्कूल में"], "correct": 2 },
+  { "question": "Bluetooth का उपयोग किसके लिए होता है?", "options": ["Wired Connection", "Short-range Wireless Communication", "Long-range Network", "None"], "correct": 1 },
+  { "question": "Computer Viruses को हटाने के लिए क्या प्रयोग करते हैं?", "options": ["Firewall", "Antivirus", "Modem", "Compiler"], "correct": 1 },
+  { "question": "Password का उपयोग क्यों किया जाता है?", "options": ["Formatting के लिए", "Security के लिए", "Login block करने के लिए", "Display के लिए"], "correct": 1 },
+  { "question": "Recycle Bin कहाँ होता है?", "options": ["Control Panel में", "My Computer में", "Desktop पर", "Taskbar पर"], "correct": 2 },
+  { "question": "MS Word में कौन-सी File Save होती है?", "options": [".docx", ".xls", ".ppt", ".jpg"], "correct": 0 },
+  { "question": "FAT और NTFS क्या हैं?", "options": ["Antivirus", "File Systems", "Software", "Languages"], "correct": 1 },
+  { "question": "Computer में GUI का अर्थ है?", "options": ["General User Interface", "Graphical User Interface", "Global Use Interface", "Graphic Utility Interface"], "correct": 1 },
+  { "question": "भारत में कंप्यूटर शिक्षा का सबसे लोकप्रिय कोर्स क्या है?", "options": ["DCA", "PGDCA", "CCC", "MCA"], "correct": 2 },
+  { "question": "EPROM का फुल फॉर्म क्या है?", "options": ["Erasable Programmable Read Only Memory", "Electric Program ROM", "Extra Power ROM", "None"], "correct": 0 }
+);
+questions.push(
+  { "question": "Computer की भाषा कौन-सी होती है?", "options": ["English", "Hindi", "Binary", "French"], "correct": 2 },
+  { "question": "OCR का फुल फॉर्म क्या है?", "options": ["Optical Character Recognition", "Online Code Reader", "Original Code Resource", "Optical Code Reader"], "correct": 0 },
+  { "question": "Which storage device is not portable?", "options": ["Pen Drive", "CD", "Hard Disk Drive", "RAM"], "correct": 3 },
+  { "question": "Webpage को एक जगह से दूसरी जगह ले जाने को क्या कहते हैं?", "options": ["Download", "Upload", "Browsing", "Redirect"], "correct": 3 },
+  { "question": "Computer में सबसे तेज़ मेमोरी कौन-सी होती है?", "options": ["RAM", "ROM", "Cache", "Hard Disk"], "correct": 2 },
+  { "question": "Ctrl + C का मतलब क्या होता है?", "options": ["Cut", "Close", "Copy", "Clear"], "correct": 2 },
+  { "question": "CD को कितनी बार लिखा जा सकता है?", "options": ["Many Times", "Only Once", "Never", "Unlimited"], "correct": 1 },
+  { "question": "IP Address में कितने बिट्स होते हैं (IPv4)?", "options": ["16", "32", "64", "128"], "correct": 1 },
+  { "question": "GUI आधारित पहला Operating System कौन सा था?", "options": ["DOS", "Windows 95", "UNIX", "Windows 3.1"], "correct": 3 }
+);
+
+
+        let currentQuestion = 0;
+        let attemptedQuestions = 0;
+        let answers = Array(questions.length).fill(null);
+
+        // Shuffle an array (Fisher-Yates Algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        // Shuffle questions before starting the exam
+        shuffleArray(questions);
+
+        // Shuffle options for each question and adjust the correct index
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+
+            // Update the correct index
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const examCode = document.getElementById('exam-code').value;
+    if (examCode === "itcsCCC") {
+        // Randomize questions and options
+        shuffleArray(questions); // Shuffle questions
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+        document.getElementById('form-section').classList.remove('active');
+        document.getElementById('exam-section').classList.add('active');
+        startTimer( 60 * 60); // 30 minutes
+        showQuestion(); // Display the first question
+        document.getElementById('total-questions').textContent = questions.length;
+    } else {
+        alert('Invalid Exam Code!');
+    }
+});
+
+
+        // Timer
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const timerInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').textContent = `Time Left:⏳ ${minutes}:${seconds}`;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        // Show question
+        function showQuestion() {
+            const questionSection = document.getElementById('question-section');
+            const questionData = questions[currentQuestion];
+            questionSection.innerHTML = `
+                <h3>Q${currentQuestion + 1}: ${questionData.question}</h3>
+                ${questionData.options.map((opt, idx) => `
+                    <label>
+                        <input type="radio" name="answer" value="${idx}" ${answers[currentQuestion] === idx ? "checked" : ""}>
+                        ${opt}
+                    </label><br>
+                `).join('')}
+            `;
+            document.getElementById('submit-btn').style.display = currentQuestion === questions.length - 1 ? 'inline' : 'none';
+        }
+
+        // Button event listeners
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestion > 0) currentQuestion--;
+            showQuestion();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            saveAnswer();
+            if (currentQuestion < questions.length - 1) currentQuestion++;
+            showQuestion();
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            if (confirm("Are you sure you want to submit?")) {
+                submitExam();
+            }
+        });
+
+        // Save answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = parseInt(selectedOption.value);
+                if (answers[currentQuestion] === null) attemptedQuestions++;
+                answers[currentQuestion] = answer;
+                document.getElementById('attempted-questions').textContent = attemptedQuestions;
+            }
+        }
+
+        
+
+
+
+      
+// Anti-cheating: Detect tab switching or minimizing
+let isExamFinished = false; // Variable to track if the exam is finished
+let tabSwitchCount = 0; // variable to track the number of tab
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !isExamFinished) {
+        tabSwitchCount++;
+        if(tabSwitchCount === 1 ){
+        // Show the cheating modal
+        const modal = document.getElementById('cheating-modal');
+                modal.style.display = 'block';
+                document.getElementById('cheating-content').innerHTML = '🚨 If this happens again, it will be your last warning. After this, your exam will be auto-submitted. ⚠️.'
+        } else if (tabSwitchCount === 2){
+            // Show the cheating modal
+            const modal = document.getElementById('cheating-modal');
+                            modal.style.display = 'block';
+                        
+                         document.getElementById('cheating-content').innerHTML = 'Your 📝 test is ⚙️ Auto-Submitted.'
+              // Automatically submit the exam
+        submitExam();
+        }
+    }
+});
+    // if (document.hidden && !isExamFinished) {
+    //     // Show the cheating modal
+    //     const modal = document.getElementById('cheating-modal');
+    //     modal.style.display = 'block';
+
+    //     // Automatically submit the exam
+    //     submitExam();
+    // }
+
+
+// Handle the "OK" button in the modal
+document.getElementById('cheating-ok-btn').addEventListener('click', () => {
+    const modal = document.getElementById('cheating-modal');
+    modal.style.display = 'none';
+});
+
+// Submit exam function
+function submitExam() {
+    saveAnswer();
+    document.getElementById('exam-section').classList.remove('active');
+    document.getElementById('result-section').classList.add('active');
+
+    // Calculate the score
+    const marksPerQuestion = 1; // Define how many marks each question carries
+    let score = answers.filter((ans, idx) => ans === questions[idx].correct).length * marksPerQuestion;
+
+    // let percentage = (score / questions.length) * 100;
+
+    // Determine Pass or Fail
+    let passPercent = 50;
+    let percentage = (score / (questions.length * marksPerQuestion)) * 100;
+    let resultStatus = percentage >= passPercent ? 'Pass' : 'Fail';
+
+   
+
+
+    // Display result details
+    let resultHTML = `
+        
+        <p style="font-size: 17px;">Student ID 🆔 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${document.getElementById('student-id').value}</p>
+        <p style="font-size: 17px;">Student Name 🧑‍🎓 :&nbsp;&nbsp; ${document.getElementById('student-name').value}</p>
+        <p style="font-size: 17px;">Total Exam Marks 📊 :&nbsp;&nbsp; ${questions.length * marksPerQuestion}</p>
+        <p style="font-size: 17px;">Passing Marks 🏅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${((questions.length * marksPerQuestion)* passPercent)/100} Marks</p>
+        <p style="font-size: 17px;">Attempted ✅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${attemptedQuestions}</p>
+        <p style="font-size: 17px;">Total Questions 📚:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${questions.length}</p>
+        <p style="font-size: 17px;">Score 🎯 : <h2 style="font-size: 45px; color:Yellow; text-align:center;">${score}&nbsp; Marks </h2></p>
+        <p style="font-size: 17px;">Status 🏆 : <h1 style="font-size: 70px; color:red; text-align:center;">${resultStatus}</p></h1>
+        <h3 style="color:yellow; font-size: 24px;">Your Answer Sheet:</h3>
+        
+        <ul>`;
+
+  
+
+    resultHTML += `</ul>`;
+
+    // // Display the result
+    document.getElementById('result-details').innerHTML = resultHTML;
+
+    // Send data to Google Sheets
+    const formData = {
+        studentId: document.getElementById('student-id').value,
+        studentName: document.getElementById('student-name').value,
+        totalQuestions: questions.length,
+        score: score,
+        resultStatus: resultStatus
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbwn81GfjVMv7ghBsgofpHxspBXdW8WwgVAjewnclN9-5mUUI8AWyE6OURg1HOmA5V9bGQ/exec', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    }).then(response => response.json())
+      .then(data => {
+          console.log("Data saved to Google Sheets:", data);
+          alert('Result is Saved!!');
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('May be the data is saved!!')
+      });
+
+    // Disable anti-cheating after the result is shown
+    isExamFinished = true;
+}
+
+// Add this function inside the script tag
+document.getElementById('download-btn').addEventListener('click', function() {
+    // Prepare the content as a string (plain text format)
+    let answerText = `Student ID: ${document.getElementById('student-id').value}\n`;
+    answerText += `Student Name: ${document.getElementById('student-name').value}\n\n`;
+    answerText += 'Answers:\n';
+    
+    // Loop through answers and format them into text
+    answers.forEach((answer, idx) => {
+        const question = questions[idx];
+        const selectedOptionText = question.options[answer]; // Get the text of the selected option
+        const correctOptionText = question.options[question.correct]; // Get the text of the correct option
+        
+        answerText += `Q${idx + 1}: ${question.question}\n`;
+        answerText += `Your Answer: ${selectedOptionText || "No Answer"}\n`;
+        answerText += `Correct Answer: ${correctOptionText}\n\n`;
+    });
+    
+    // Add the score and total questions at the end
+    answerText += `Score: ${answers.filter((ans, idx) => ans === questions[idx].correct).length} / ${questions.length}\n`;
+
+    // Create a Blob from the plain text content
+    const blob = new Blob([answerText], { type: 'text/plain' });
+
+    // Create an anchor element for triggering the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${document.getElementById('student-id').value}_${document.getElementById('student-name').value}_answer_sheet.txt`; // Filename
+
+    // Trigger the download
+    // link.click();
+});
+
+// Predefined secure code
+const secureCode = "9919916995";
+
+// Handle verification
+document.getElementById('verify-code-btn').addEventListener('click', () => {
+    const enteredCode = document.getElementById('verification-code').value;
+    const errorElement = document.getElementById('verification-error');
+    const answersheetSection = document.getElementById('answersheet-section');
+    
+    if (enteredCode === secureCode) {
+        errorElement.style.display = "none";
+        answersheetSection.style.display = "block";
+        
+        // Populate the answer sheet
+        const answersheetContent = document.getElementById('answersheet-content');
+        answersheetContent.innerHTML = ""; // Clear previous content
+        questions.forEach((question, idx) => {
+            const studentAnswer = answers[idx];
+            const isCorrect = studentAnswer === question.correct;
+            answersheetContent.innerHTML += `
+                <li align="left">
+                    <p align="left"><strong>Q${idx + 1}:</strong> ${question.question}</p>
+                    <p align="left"><strong>Your Answer:</strong> ${question.options[studentAnswer] || "No Answer"}</p>
+                    <p align="left"><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
+                    <p align="left" style="color: ${isCorrect ? 'green' : 'red'};">${isCorrect ? 'Correct' : 'Incorrect'}</p>
+                </li>
+            `;
+        });
+    } else {
+        errorElement.style.display = "block";
+        answersheetSection.style.display = "none";
+    }
+});
+// Disable right-click menu
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+
+// Disable common key combinations for opening developer tools
+document.addEventListener('keydown', (e) => {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, etc.
+    if (
+        e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) || 
+        (e.ctrlKey && e.key === "U")
+    ) {
+        e.preventDefault();
+        alert("Developer tools are disabled!");
+    }
+});
+
+// Detect and react to open developer tools
+const detectDevTools = () => {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function () {
+            alert("Developer tools detected! Closing the exam.");
+            window.location.href = "https://example.com"; // Redirect to another page or handle as needed
+        }
+    });
+    console.log(element);
+};
+
+// Periodically check for developer tools
+setInterval(detectDevTools, 10000);
+
+
+ 
+    </script>
+</body>
+</html>
