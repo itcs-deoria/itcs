@@ -248,14 +248,14 @@ input[type="radio"] {
         
             <h2>Student Login</h2>
            
-            <h2 style="color:red;" ><marquee behavior="alternet" direction="right" >CCC Mock Drill Test</marquee> </h2>
+            <h2 style="color:red;" ><marquee behavior="alternet" direction="right" >Tally Mock Drill Test</marquee> </h2>
           
             <form id="login-form">
                 <label for="student-id">🆔 Student ID:  (if you don't have use this:"1001")</label><br>
                 <input type="number" id="student-id" required placeholder="Enter your ID Card Number" title="I-Card Number"><br><br>
                 <label for="student-name">👨‍🎓 Student Name:</label><br>
                 <input type="text" id="student-name" required placeholder="Enter your Full Name" title="Enter Your Name"><br><br>
-                <label for="exam-code">📝 Exam Code: (itcsCCC)</label><br>
+                <label for="exam-code">📝 Exam Code:</label><br>
                 <input type="password" id="exam-code" required placeholder="Enter Exam Code" title="Ask Teacher for the Code"><br><br>
                 <button type="submit">🚀 Start Exam 🚀</button>
             </form>
@@ -265,8 +265,8 @@ input[type="radio"] {
             <div class="status">
                 Total Questions: <span id="total-questions"></span>, Attempted: <span id="attempted-questions">0</span>
             </div>
-            <h2>CCC Exam Test "IT Computer Studies"</h2>
-            <h2 style="color: red;"><marquee behavior="alternet">CCC Mock Drill Test</marquee></h2>
+            <h2>Tally Mock Drill Test "IT Computer Studies"</h2>
+            <h2 style="color: red;"><marquee behavior="alternet">Tally Mock Drill Test</marquee></h2>
             <div class="question-section" id="question-section"></div>
             <div class="buttons">
                 <button id="prev-btn">Previous</button>
@@ -448,7 +448,7 @@ questions.push(
     e.preventDefault();
 
     const examCode = document.getElementById('exam-code').value;
-    if (examCode === "itcsCCC") {
+    if (examCode === "tallyitcs") {
         // Randomize questions and options
         shuffleArray(questions); // Shuffle questions
         questions.forEach(question => {
@@ -674,7 +674,7 @@ document.getElementById('download-btn').addEventListener('click', function() {
 });
 
 // Predefined secure code
-const secureCode = "9919916995";
+const secureCode = "991";
 
 // Handle verification
 document.getElementById('verify-code-btn').addEventListener('click', () => {
