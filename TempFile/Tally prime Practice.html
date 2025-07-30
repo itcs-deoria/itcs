@@ -623,7 +623,7 @@ function submitExam() {
         resultStatus: resultStatus
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbwOGgVEoUQv-PDrsjHufr8Dj4lG9LScaeTYQ4YoPgxy4GkJlwemUPqkC9RIDzvY1neU/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbwET0jZeXw5ZbZusrKBvzumLc5cO_IrsswmrFpN9YB4HSWq-TLfTmOAvC-f0yimidFz/exec', {
         method: 'POST',
         body: new URLSearchParams(formData)
     }).then(response => response.json())
