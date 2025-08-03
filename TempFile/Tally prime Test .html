@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px; 
+            margin: auto;
+            padding: 20px;
+        }
+        .form-section, .exam-section, .result-section {
+            display: none;
+        }
+        .form-section.active, .exam-section.active, .result-section.active {
+            display: block;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question-section {
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #fe4f4f, #001cfe);
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button {
+    background: #ff00b9;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.status {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.question-section {
+    margin: 20px 0;
+    background: #000000;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+    font-size: 22px;
+}
+
+.question-section h3 {
+    color: yellow;
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.buttons {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.buttons button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.result-section {
+    text-align: center;
+}
+
+.result-section p {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .timer {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .question-section {
+        padding: 15px;
+    }
+}
+/* Modal styles */
+#cheating-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    overflow: auto;
+}
+
+#cheating-modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+#cheating-modal h2 {
+    color: #ff0000;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#cheating-modal p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#cheating-modal button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #ff00b9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cheating-modal button:hover {
+    background: #0056b3;
+}
+#result-details{
+    text-align: left;
+   align-content: center;
+}
+
+
+    </style>
+</head> 
+<body>
+    <div class="container">
+        <div class="form-section active" id="form-section">
+        
+            <h2>Student Login</h2>
+           
+            <h2 style="color:red;" ><marquee behavior="alternet" direction="right" >CCC Mock Drill Test</marquee> </h2>
+          
+            <form id="login-form">
+                <label for="student-id">🆔 Student ID:  (if you don't have use this:"1001")</label><br>
+                <input type="number" id="student-id" required placeholder="Enter your ID Card Number" title="I-Card Number"><br><br>
+                <label for="student-name">👨‍🎓 Student Name:</label><br>
+                <input type="text" id="student-name" required placeholder="Enter your Full Name" title="Enter Your Name"><br><br>
+                <label for="exam-code">📝 Exam Code: (itcsCCC)</label><br>
+                <input type="password" id="exam-code" required placeholder="Enter Exam Code" title="Ask Teacher for the Code"><br><br>
+                <button type="submit">🚀 Start Exam 🚀</button>
+            </form>
+        </div>
+        <div class="exam-section" id="exam-section">
+            <div class="timer" id="timer">Time Left: ⏳ 00:00:00</div>
+            <div class="status">
+                Total Questions: <span id="total-questions"></span>, Attempted: <span id="attempted-questions">0</span>
+            </div>
+            <h2>CCC Exam Test "IT Computer Studies"</h2>
+            <h2 style="color: red;"><marquee behavior="alternet">CCC Mock Drill Test</marquee></h2>
+            <div class="question-section" id="question-section"></div>
+            <div class="buttons">
+                <button id="prev-btn">Previous</button>
+                <button id="next-btn">Next</button>
+                <button id="submit-btn" style="display:none;">Submit</button>
+            </div>
+        </div>
+        <div class="result-section" id="result-section">
+            <h2>🎓 Exam Result 🎓</h2>
+            <div id="result-details"></div>
+            <div id="verification-section">
+                <label for="verification-code">Enter Verification Code to View Answer Sheet: (For code ask to Teacher )</label>
+                <input type="password" id="verification-code" placeholder="Enter Code" />
+                <button id="verify-code-btn">Verify</button>
+                <p id="verification-error" style="color: red; display: none;">Invalid Code! Please try again.</p>
+            </div>
+            <div id="answersheet-section" style="display: none;">
+                <h3 style="color:yellow">Your Answer Sheet:</h3>
+                <ul id="answersheet-content"></ul>
+                <button id="download-btn">Download Answer Sheet</button>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Modal HTML -->
+<div id="cheating-modal">
+    <div class="modal-content">
+        <h2>📱👀💻Cheating Detected📱👀💻</h2>
+        <p id="cheating-content">If this happens again, it will be your last warning. After this, your exam will be auto-submitted..</p>
+        <button id="cheating-ok-btn">OK</button>
+    </div>
+</div>
+
+    <script>
+const questions = [
+  { "question": "Tally में 'Golden Rule of Accounting' कितने प्रकार के होते हैं?", "options": ["2", "3", "4", "5"], "correct": 1 },
+  { "question": "Personal Account का नियम क्या है?", "options": ["Debit the receiver, Credit the giver", "Debit all expenses", "Credit what comes in", "Debit what goes out"], "correct": 0 },
+  { "question": "Real Account का नियम क्या है?", "options": ["Credit the giver, Debit the Receiver ", "Debit what comes in, Credit what goes out", "Debit the Expense, Credit the Income", "Giver the Debit , Receiver the Credit"], "correct": 1 },
+  { "question": "Nominal Account का नियम क्या है?", "options": ["Debit the receiver", "Credit the giver", "Debit all expenses and losses, Credit all incomes and gains", "Credit what goes out"], "correct": 2 },
+  { "question": "Tally Prime क्या है?", "options": ["ऑनलाइन गेम", "Accounting Software", "बैंकिंग App", "ऑफिस एप्लिकेशन"], "correct": 1 },
+  { "question": "Accounting और Account में क्या फर्क है?", "options": ["Same हैं", "Account प्रोसेस है", "Account रिकॉर्ड होता है, Accounting प्रक्रिया", "दोनों hardware terms हैं"], "correct": 2 },
+  { "question": "Voucher किसलिए उपयोग किया जाता है?", "options": ["Report देखने के लिए", "Data delete करने के लिए", "Entry करने के लिए", "Stock manage करने के लिए"], "correct": 2 },
+  { "question": "Stock का अर्थ क्या है?", "options": ["Bank Balance", "सामान जो बेचा/खरीदा जाए", "Cash", "Discount"], "correct": 1 },
+  { "question": "Unit का उपयोग कहाँ होता है?", "options": ["Ledger entry में", "Amount जोड़ने में", "माल की माप में", "Voucher save करने में"], "correct": 2 },
+  { "question": "Dashboard Tally में क्या दर्शाता है?", "options": ["Stock Summary", "Menu और Status Overview", "Voucher Type", "GST Rate"], "correct": 1 },
+  { "question": "'Cash in Hand' किसे दिखाता है?", "options": ["Bank Balance", "Available Cash", "Loan Amount", "GST"], "correct": 1 },
+  { "question": "'Bank Balance' कहाँ दिखता है?", "options": ["Trial Balance", "Day Book", "Balance Sheet", "Gateway of Tally"], "correct": 2 },
+  { "question": "Tally में Company कैसे बनाई जाती है?", "options": ["Gateway > Create Company", "Alter > Create", "Gateway > Display", "Inventory > Add Company"], "correct": 0 },
+  { "question": "Ledger क्या होता है?", "options": ["Stock रिपोर्ट", "माल का नाम", "Accounts का रिकॉर्ड", "Voucher टाइप"], "correct": 2 },
+  { "question": "Ledger Alter किसलिए होता है?", "options": ["Ledger delete करने के लिए", "Ledger modify/edit करने के लिए", "Voucher बनाने के लिए", "Company rename करने के लिए"], "correct": 1 },
+  { "question": "Company Alter से क्या किया जा सकता है?", "options": ["New GST जोड़ना", "Company को edit करना", "Stock unit बनाना", "Cash डालना"], "correct": 1 },
+  { "question": "Alter का क्या उपयोग है?", "options": ["नया डेटा बनाने के लिए", "डेटा डिलीट करने के लिए", "मौजूदा डेटा को edit करने के लिए", "Company close करने के लिए"], "correct": 2 },
+  { "question": "Financial Year का मतलब क्या होता है?", "options": ["Exam Year", "Calendar Year", "Accounting Year", "Budget Year"], "correct": 2 },
+  { "question": "Books Beginning Date का अर्थ क्या है?", "options": ["Balance Sheet की तारीख", "Entry delete करने की date", "Accounting start date", "GST file date"], "correct": 2 },
+  { "question": "Tally में कौन सा Voucher खरीद के लिए उपयोग होता है?", "options": ["Payment Voucher", "Sales Voucher", "Purchase Voucher", "Contra Voucher"], "correct": 2 }
+];
+questions.push(
+  { "question": "Tally Prime में Payment Voucher किसके लिए प्रयोग होता है?", "options": ["माल बेचने के लिए", "पैसा प्राप्त करने के लिए", "पैसा चुकाने के लिए", "नया स्टॉक जोड़ने के लिए"], "correct": 2 },
+  { "question": "Receipt Voucher किस काम आता है?", "options": ["पैसा प्राप्त करने के लिए", "Voucher delete करने के लिए", "Stock issue करने के लिए", "GST भरने के लिए"], "correct": 0 },
+  { "question": "Contra Voucher का उपयोग किसके लिए होता है?", "options": ["बैंक से नकद निकालने या जमा करने के लिए", "नया Item जोड़ने के लिए", "GST entry के लिए", "Ledger बनाने के लिए"], "correct": 0 },
+  { "question": "Tally Prime में Gateway of Tally क्या होता है?", "options": ["Main Entry Point", "Voucher Screen", "Inventory Window", "GST Calculation Page"], "correct": 0 },
+  { "question": "Tally में कितने प्रकार के प्री-डिफाइंड Voucher होते हैं?", "options": ["4", "6", "9", "12"], "correct": 2 },
+  { "question": "Inventory में 'Godown' का क्या कार्य है?", "options": ["Staff जोड़ने के लिए", "Company बदलने के लिए", "Stock का स्थान बताने के लिए", "Ledger बनाने के लिए"], "correct": 2 },
+  { "question": "Ledger बनाने के लिए कौन सा ऑप्शन चुनते हैं?", "options": ["Inventory Info", "Accounting Vouchers", "Accounts Info > Ledgers > Create", "Gateway > Create Company"], "correct": 2 },
+  { "question": "Tally में Group क्या होता है?", "options": ["Voucher टाइप", "Account category", "Stock Unit", "GST Class"], "correct": 1 },
+  { "question": "Bank Reconciliation कहाँ होता है?", "options": ["Gateway > Display > Bank Reconciliation", "Alter > Ledger", "Inventory > Bank Entry", "Accounts Info > Vouchers"], "correct": 0 },
+  { "question": "Tally में F11 प्रेस करने से क्या होता है?", "options": ["Company Close", "Feature Activation", "Ledger Alter", "Report Export"], "correct": 1 },
+  { "question": "F12 Configure किसलिए होता है?", "options": ["Display Color बदलने के लिए", "Voucher की setting के लिए", "Voucher delete करने के लिए", "Company Rename के लिए"], "correct": 1 },
+  { "question": "Tally में Ledger बनाने के लिए कौन सी shortcut key है?", "options": ["F4", "Alt + C", "Ctrl + G", "F5"], "correct": 1 },
+  { "question": "Sales Voucher किसके लिए है?", "options": ["सामान खरीदने के लिए", "सेल्स रिकॉर्ड करने के लिए", "GST भरने के लिए", "Ledger delete करने के लिए"], "correct": 1 },
+  { "question": "Tally में Purchase Voucher की shortcut key क्या है?", "options": ["F9", "F4", "F5", "F6"], "correct": 0 },
+  { "question": "Payment Voucher की shortcut key क्या है?", "options": ["F5", "F7", "F9", "F2"], "correct": 1 },
+  { "question": "Tally में Gateway of Tally से Company बदलने का तरीका क्या है?", "options": ["Alt + F1", "Alt + F3", "Alt + C", "Alt + G"], "correct": 1 },
+  { "question": "Tally में Company बंद करने के लिए कौन सी key?", "options": ["Alt + F1", "Alt + Q", "Alt + F3", "F12"], "correct": 0 },
+  { "question": "Balance Sheet किसे दर्शाता है?", "options": ["Income और Expenses", "Assets और Liabilities", "Stock और Rate", "Cash Flow"], "correct": 1 },
+  { "question": "Profit & Loss Account में क्या दिखता है?", "options": ["सिर्फ खर्च", "सिर्फ आय", "Income और Expenses का अंतर", "Assets Value"], "correct": 2 },
+  { "question": "Trial Balance किसका सारांश है?", "options": ["Journal Entries का", "All Ledger balances का", "GST Report का", "Voucher View का"], "correct": 1 },
+  { "question": "Tally में Alt + D किसलिए है?", "options": ["Voucher print", "Entry delete", "Ledger create", "Stock view"], "correct": 1 },
+  { "question": "Tally में बैकअप कैसे लिया जाता है?", "options": ["Gateway > F11", "Gateway > Alt + F3 > Backup", "Company > F1", "Gateway > F5"], "correct": 1 },
+  { "question": "Tally में Restore का उपयोग कब करते हैं?", "options": ["नया voucher बनाने के लिए", "पुराना डेटा वापस लाने के लिए", "Ledger delete करने के लिए", "Item जोड़ने के लिए"], "correct": 1 },
+  { "question": "Tally में 'Shut Company' ऑप्शन किसके लिए है?", "options": ["Company को बंद करने के लिए", "Voucher delete करने के लिए", "Report देखने के लिए", "GST भरने के लिए"], "correct": 0 },
+  { "question": "Tally में GST enable कहाँ से करते हैं?", "options": ["F12 > Features", "F11 > Statutory & Taxation", "Alt + F3", "Accounts Info"], "correct": 1 },
+  { "question": "Tally में Capital Account किस group में आता है?", "options": ["Direct Expenses", "Capital Account", "Indirect Income", "Bank Account"], "correct": 1 },
+  { "question": "Drawing किस group में आता है?", "options": ["Capital Account", "Indirect Expenses", "Current Asset", "Loans & Liabilities"], "correct": 0 },
+  { "question": "Purchase Account किस Group में आता है?", "options": ["Direct Income", "Purchase Account", "Capital Account", "Fixed Assets"], "correct": 1 },
+  { "question": "Tally में Bank Account group का नाम क्या है?", "options": ["Banking", "Bank Accounts", "Bank Balances", "Cash Group"], "correct": 1 },
+  { "question": "Tally में Cash Account किस Group में आता है?", "options": ["Cash-in-Hand", "Bank Accounts", "Capital Account", "Indirect Expenses"], "correct": 0 }
+);
+questions.push(
+  { "question": "Tally में Sales Account किस Group में आता है?", "options": ["Direct Income", "Sales Account", "Indirect Income", "Capital Account"], "correct": 1 },
+  { "question": "Tally में Opening Balance कब दर्ज किया जाता है?", "options": ["Financial Year के अंत में", "Ledger बनाते समय", "Voucher entry में", "Report export करते समय"], "correct": 1 },
+  { "question": "Tally में Current Liabilities का उदाहरण क्या है?", "options": ["Cash", "Loan", "Outstanding Rent", "Stock"], "correct": 2 },
+  { "question": "Indirect Expenses का एक उदाहरण बताइए:", "options": ["Salary", "Cash", "Sales", "Purchase"], "correct": 0 },
+  { "question": "Tally में Debit और Credit को किस स्क्रीन में देखा जाता है?", "options": ["Balance Sheet", "Day Book", "Trial Balance", "Ledger"], "correct": 3 },
+  { "question": "Tally में Day Book क्या दर्शाता है?", "options": ["सिर्फ Sales", "सभी vouchers की लिस्ट", "सिर्फ Payments", "Balance Sheet"], "correct": 1 },
+  { "question": "Tally में Multiple Godowns कब उपयोगी होता है?", "options": ["एक से ज़्यादा कंपनी में", "Multiple Stock Location के लिए", "GST Return के लिए", "Bank Entry के लिए"], "correct": 1 },
+  { "question": "Tally में Voucher Entry करने के लिए सबसे पहले कहाँ जाना होता है?", "options": ["Accounts Info", "Display", "Accounting Vouchers", "Inventory Reports"], "correct": 2 },
+  { "question": "Tally में Interest Calculation किसमें किया जा सकता है?", "options": ["Ledger", "Voucher", "Inventory", "None"], "correct": 0 },
+  { "question": "Tally में TDS का पूरा नाम क्या है?", "options": ["Total Discounted Sales", "Tax Deducted at Source", "Taxable Direct Sales", "Total Data Summary"], "correct": 1 },
+  { "question": "Tally में GST चालू करने से पहले किस module में जाना होता है?", "options": ["F11 Features", "Inventory Info", "Gateway of Tally", "Trial Balance"], "correct": 0 },
+  { "question": "Tally में Ledger को Copy करने के लिए कौन सी shortcut key है?", "options": ["Ctrl + C", "Alt + C", "Ctrl + Alt + C", "Ledger copy नहीं होता"], "correct": 3 },
+  { "question": "Tally में Predefined Groups कितने होते हैं?", "options": ["12", "28", "31", "15"], "correct": 1 },
+  { "question": "Tally में Capital  किस Account में आएगा?", "options": ["Nominal A/c", "Personal A/c", "Real A/c", "Kisi mai nhi"], "correct": 1 },
+  { "question": "Tally में Inventory Maintain करने के लिए किसे Enable करना होता है?", "options": ["Inventory Info", "Accounting Features", "F11 Features में Maintain Inventory?", "F12 Config में Maintain Stock"], "correct": 2 },
+  { "question": "Tally में Quantity और Rate कहाँ दर्ज किया जाता है?", "options": ["Ledger में", "Voucher Entry में", "Trial Balance में", "Cash Book में"], "correct": 1 },
+  { "question": "Tally में Item बनाते समय कौन सी जानकारी ज़रूरी है?", "options": ["Godown", "Rate", "Unit", "Group"], "correct": 2 },
+  { "question": "Tally में Salary को किस Account में रिकॉर्ड किया जाता है?", "options": ["Indirect Expense", "Direct Income", "Current Asset", "Capital A/c"], "correct": 0 },
+  { "question": "Tally में Voucher को दोबारा देखने के लिए कौन सी screen होती है?", "options": ["Accounts Info", "Gateway > Display > Day Book", "Inventory Info", "F12 Config"], "correct": 1 },
+  { "question": "Tally में Stock Summary किसमें दिखती है?", "options": ["Accounting Vouchers", "Inventory Info", "Gateway > Stock Summary", "Trial Balance"], "correct": 2 },
+  { "question": "Tally में Printing के लिए कौन सी shortcut key होती है?", "options": ["Alt + P", "Alt + F", "Ctrl + P", "F10"], "correct": 0 },
+  { "question": "Tally में Email भेजने के लिए कौन सा option होता है?", "options": ["F12 > Send", "Alt + E", "Gateway > Mail", "Tally में यह संभव नहीं"], "correct": 1 },
+  { "question": "Tally में Import Data का उपयोग किसके लिए है?", "options": ["New Company बनाने के लिए", "पुराना डेटा लाने के लिए", "Voucher delete करने के लिए", "Stock Entry के लिए"], "correct": 1 },
+  { "question": "Tally में Ledger Report कहाँ से देखी जाती है?", "options": ["Gateway > Display > Account Books > Ledger", "Inventory Info", "Accounting Vouchers", "Day Book"], "correct": 0 },
+  { "question": "Tally में Tally Vault का उपयोग किसलिए होता है?", "options": ["GST Return भरने के लिए", "Report Export करने के लिए", "Company को Password से Lock करने के लिए", "Stock Report देखने के लिए"], "correct": 2 },
+  { "question": "Tally Vault password भूल जाने पर क्या होता है?", "options": ["Recover हो जाता है", "Email पर OTP आता है", "Vault Company को access नहीं किया जा सकता", "Admin से Reset होता है"], "correct": 2 },
+  { "question": "Tally में Alt + F1 किसलिए होता है?", "options": ["Voucher बनाना", "Detail View", "Quick Export", "Company Rename"], "correct": 1 },
+  { "question": "Tally में Closing Stock कहाँ दिखता है?", "options": ["Profit & Loss", "Stock Summary", "Cash Book", "Sales Report"], "correct": 1 },
+  { "question": "Tally में Outstanding Report कहाँ से देखते हैं?", "options": ["Display > Statement of Accounts > Outstanding", "Inventory Info", "Accounts Info > Group", "Accounting Vouchers"], "correct": 0 },
+  { "question": "Tally में narration क्या होता है?", "options": ["GST Rate", "Voucher का Description", "Ledger का नाम", "Report की Copy"], "correct": 1 }
+);
+questions.push(
+  { "question": "Ledger बनाते समय 'Under Group' का क्या महत्व होता है?", "options": ["Taxation को दर्शाता है", "Entry की Category को दर्शाता है", "Ledger का नाम दर्शाता है", "Entry की तारीख दर्शाता है"], "correct": 1 },
+  { "question": "Tally Prime में Multiple Price Level का उपयोग कब किया जाता है?", "options": ["जब एक ही item को अलग-अलग rate पर बेचना हो", "जब discount लगाना हो", "जब केवल एक unit हो", "जब GST जोड़ना हो"], "correct": 0 },
+  { "question": "Voucher Entry के दौरान 'Narration' क्या होता है?", "options": ["Amount का विवरण", "Date का Format", "Entry का संक्षिप्त विवरण", "Voucher का प्रकार"], "correct": 2 },
+  { "question": "Tally Prime में F11 Features का क्या उपयोग है?", "options": ["Display बदलने के लिए", "Configuration सेट करने के लिए", "Optional Features enable/disable करने के लिए", "Shortcut keys बदलने के लिए"], "correct": 2 },
+  { "question": "Tally Prime में Company के Financial Year को बदलने के लिए क्या करना होता है?", "options": ["Gateway of Tally → Alter → Company Info", "Gateway of Tally → Create → Financial Year", "Gateway of Tally → Display → Change Year", "Gateway of Tally → Company → Start New Year"], "correct": 0 },
+  { "question": "Tally Prime में 'Stock Summary' किसका विश्लेषण करता है?", "options": ["Expenses का", "Assets का", "Inventory का", "Ledgers का"], "correct": 2 },
+  { "question": "Contra Voucher का प्रयोग कब किया जाता है?", "options": ["Bank से Cash निकासी या जमा के लिए", "Sale के लिए", "Purchase के लिए", "Expense Entry के लिए"], "correct": 0 },
+  { "question": "Tally Prime में 'Gateway of Tally' क्या दर्शाता है?", "options": ["Software का Dashboard", "Bank Entries", "Inventory Records", "GST Summary"], "correct": 0 },
+  { "question": "Tally में Pre-defined Ledgers कौन-कौन से होते हैं?", "options": ["Cash और Sales", "Bank और Purchase", "Cash और Profit & Loss A/c", "Sales और Purchase"], "correct": 2 },
+  { "question": "Tally Prime में 'Group' किसलिए बनाया जाता है?", "options": ["Ledgers को categorize करने के लिए", "Stock Items को जोड़ने के लिए", "Voucher बनाने के लिए", "GST जोड़ने के लिए"], "correct": 0 },
+  { "question": "Debit Note का उपयोग कब किया जाता है?", "options": ["Customer को सामान बेचने पर", "Purchase Return पर", "Bank से पैसे निकालते समय", "Salary देने पर"], "correct": 1 },
+  { "question": "Credit Note Entry किस Voucher में होती है?", "options": ["Sales", "Purchase", "Credit Note", "Journal"], "correct": 2 },
+  { "question": "Tally Prime में Gateway → Display → Daybook का क्या कार्य है?", "options": ["Ledger देखना", "All Vouchers का एक साथ विवरण देखना", "Stock Summary देखना", "Unit बनाना"], "correct": 1 },
+  { "question": "Ledger Creation में GST Details कब Active होती हैं?", "options": ["जब Group 'Duties & Taxes' हो", "जब Ledger का नाम GST हो", "जब Company में GST Enable किया गया हो", "जब Unit बनाई गई हो"], "correct": 2 },
+  { "question": "Tally Prime में Inventory Features enable करने के लिए किस key का प्रयोग होता है?", "options": ["F11", "F12", "Alt+F1", "Alt+C"], "correct": 0 },
+  { "question": "Tally Prime में एक ही समय पर कितनी Companies Open की जा सकती हैं?", "options": ["1", "2", "More than 1", "Unlimited"], "correct": 2 },
+  { "question": "Tally Prime में 'Bank Reconciliation' कहाँ से किया जाता है?", "options": ["Gateway → Banking → Reconciliation", "Gateway → Display → Bank Ledger", "Gateway → Voucher → Contra", "Gateway → Company Info"], "correct": 0 },
+  { "question": "Tally Prime में Cost Centers का उपयोग किस लिए किया जाता है?", "options": ["Branchwise या Employee-wise खर्च Track करने के लिए", "Stock Summary देखने के लिए", "Unit बनाने के लिए", "GST लगाने के लिए"], "correct": 0 },
+  { "question": "Tally Prime में Voucher को 'Optional' क्यों किया जाता है?", "options": ["Permanent Entry के पहले Verify करने के लिए", "Entry Hide करने के लिए", "GST से बचने के लिए", "Bank Balance बढ़ाने के लिए"], "correct": 0 },
+  { "question": "Tally Prime में 'Reverse Journal Entry' का उपयोग कब किया जाता है?", "options": ["Incorrect Ledger को हटाने के लिए", "Old Entry को ठीक करने के लिए", "Adjustment Entry के लिए", "GST Return में Filing के लिए"], "correct": 2 }
+);
+
+
+
+
+        let currentQuestion = 0;
+        let attemptedQuestions = 0;
+        let answers = Array(questions.length).fill(null);
+
+        // Shuffle an array (Fisher-Yates Algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        // Shuffle questions before starting the exam
+        shuffleArray(questions);
+
+        // Shuffle options for each question and adjust the correct index
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+
+            // Update the correct index
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const examCode = document.getElementById('exam-code').value;
+    if (examCode === "abcd") {
+        // Randomize questions and options
+        shuffleArray(questions); // Shuffle questions
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+        document.getElementById('form-section').classList.remove('active');
+        document.getElementById('exam-section').classList.add('active');
+        startTimer( 60 * 60); // 30 minutes
+        showQuestion(); // Display the first question
+        document.getElementById('total-questions').textContent = questions.length;
+    } else {
+        alert('Invalid Exam Code!');
+    }
+});
+
+
+        // Timer
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const timerInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').textContent = `Time Left:⏳ ${minutes}:${seconds}`;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        // Show question
+        function showQuestion() {
+            const questionSection = document.getElementById('question-section');
+            const questionData = questions[currentQuestion];
+            questionSection.innerHTML = `
+                <h3>Q${currentQuestion + 1}: ${questionData.question}</h3>
+                ${questionData.options.map((opt, idx) => `
+                    <label>
+                        <input type="radio" name="answer" value="${idx}" ${answers[currentQuestion] === idx ? "checked" : ""}>
+                        ${opt}
+                    </label><br>
+                `).join('')}
+            `;
+            document.getElementById('submit-btn').style.display = currentQuestion === questions.length - 1 ? 'inline' : 'none';
+        }
+
+        // Button event listeners
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestion > 0) currentQuestion--;
+            showQuestion();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            saveAnswer();
+            if (currentQuestion < questions.length - 1) currentQuestion++;
+            showQuestion();
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            if (confirm("Are you sure you want to submit?")) {
+                submitExam();
+            }
+        });
+
+        // Save answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = parseInt(selectedOption.value);
+                if (answers[currentQuestion] === null) attemptedQuestions++;
+                answers[currentQuestion] = answer;
+                document.getElementById('attempted-questions').textContent = attemptedQuestions;
+            }
+        }
+
+        
+
+
+
+      
+// Anti-cheating: Detect tab switching or minimizing
+let isExamFinished = false; // Variable to track if the exam is finished
+let tabSwitchCount = 0; // variable to track the number of tab
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !isExamFinished) {
+        tabSwitchCount++;
+        if(tabSwitchCount === 1 ){
+        // Show the cheating modal
+        const modal = document.getElementById('cheating-modal');
+                modal.style.display = 'block';
+                document.getElementById('cheating-content').innerHTML = '🚨 If this happens again, it will be your last warning. After this, your exam will be auto-submitted. ⚠️.'
+        } else if (tabSwitchCount === 2){
+            // Show the cheating modal
+            const modal = document.getElementById('cheating-modal');
+                            modal.style.display = 'block';
+                        
+                         document.getElementById('cheating-content').innerHTML = 'Your 📝 test is ⚙️ Auto-Submitted.'
+              // Automatically submit the exam
+        submitExam();
+        }
+    }
+});
+    // if (document.hidden && !isExamFinished) {
+    //     // Show the cheating modal
+    //     const modal = document.getElementById('cheating-modal');
+    //     modal.style.display = 'block';
+
+    //     // Automatically submit the exam
+    //     submitExam();
+    // }
+
+
+// Handle the "OK" button in the modal
+document.getElementById('cheating-ok-btn').addEventListener('click', () => {
+    const modal = document.getElementById('cheating-modal');
+    modal.style.display = 'none';
+});
+
+// Submit exam function
+function submitExam() {
+    saveAnswer();
+    document.getElementById('exam-section').classList.remove('active');
+    document.getElementById('result-section').classList.add('active');
+
+    // Calculate the score
+    const marksPerQuestion = 1; // Define how many marks each question carries
+    let score = answers.filter((ans, idx) => ans === questions[idx].correct).length * marksPerQuestion;
+
+    // let percentage = (score / questions.length) * 100;
+
+    // Determine Pass or Fail
+    let passPercent = 50;
+    let percentage = (score / (questions.length * marksPerQuestion)) * 100;
+    let resultStatus = percentage >= passPercent ? 'Pass' : 'Fail';
+
+   
+
+
+    // Display result details
+    let resultHTML = `
+        
+        <p style="font-size: 17px;">Student ID 🆔 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${document.getElementById('student-id').value}</p>
+        <p style="font-size: 17px;">Student Name 🧑‍🎓 :&nbsp;&nbsp; ${document.getElementById('student-name').value}</p>
+        <p style="font-size: 17px;">Total Exam Marks 📊 :&nbsp;&nbsp; ${questions.length * marksPerQuestion}</p>
+        <p style="font-size: 17px;">Passing Marks 🏅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${((questions.length * marksPerQuestion)* passPercent)/100} Marks</p>
+        <p style="font-size: 17px;">Attempted ✅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${attemptedQuestions}</p>
+        <p style="font-size: 17px;">Total Questions 📚:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${questions.length}</p>
+        <p style="font-size: 17px;">Score 🎯 : <h2 style="font-size: 45px; color:Yellow; text-align:center;">${score}&nbsp; Marks </h2></p>
+        <p style="font-size: 17px;">Status 🏆 : <h1 style="font-size: 70px; color:red; text-align:center;">${resultStatus}</p></h1>
+        <h3 style="color:yellow; font-size: 24px;">Your Answer Sheet:</h3>
+        
+        <ul>`;
+
+  
+
+    resultHTML += `</ul>`;
+
+    // // Display the result
+    document.getElementById('result-details').innerHTML = resultHTML;
+
+    // Send data to Google Sheets
+    const formData = {
+        studentId: document.getElementById('student-id').value,
+        studentName: document.getElementById('student-name').value,
+        totalQuestions: questions.length,
+        score: score,
+        resultStatus: resultStatus
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbwOGgVEoUQv-PDrsjHufr8Dj4lG9LScaeTYQ4YoPgxy4GkJlwemUPqkC9RIDzvY1neU/exec', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    }).then(response => response.json())
+      .then(data => {
+          console.log("Data saved to Google Sheets:", data);
+          alert('Result is Saved!!');
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('May be the data is saved!!')
+      });
+
+    // Disable anti-cheating after the result is shown
+    isExamFinished = true;
+}
+
+// Add this function inside the script tag
+document.getElementById('download-btn').addEventListener('click', function() {
+    // Prepare the content as a string (plain text format)
+    let answerText = `Student ID: ${document.getElementById('student-id').value}\n`;
+    answerText += `Student Name: ${document.getElementById('student-name').value}\n\n`;
+    answerText += 'Answers:\n';
+    
+    // Loop through answers and format them into text
+    answers.forEach((answer, idx) => {
+        const question = questions[idx];
+        const selectedOptionText = question.options[answer]; // Get the text of the selected option
+        const correctOptionText = question.options[question.correct]; // Get the text of the correct option
+        
+        answerText += `Q${idx + 1}: ${question.question}\n`;
+        answerText += `Your Answer: ${selectedOptionText || "No Answer"}\n`;
+        answerText += `Correct Answer: ${correctOptionText}\n\n`;
+    });
+    
+    // Add the score and total questions at the end
+    answerText += `Score: ${answers.filter((ans, idx) => ans === questions[idx].correct).length} / ${questions.length}\n`;
+
+    // Create a Blob from the plain text content
+    const blob = new Blob([answerText], { type: 'text/plain' });
+
+    // Create an anchor element for triggering the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${document.getElementById('student-id').value}_${document.getElementById('student-name').value}_answer_sheet.txt`; // Filename
+
+    // Trigger the download
+    // link.click();
+});
+
+// Predefined secure code
+const secureCode = "786";
+
+// Handle verification
+document.getElementById('verify-code-btn').addEventListener('click', () => {
+    const enteredCode = document.getElementById('verification-code').value;
+    const errorElement = document.getElementById('verification-error');
+    const answersheetSection = document.getElementById('answersheet-section');
+    
+    if (enteredCode === secureCode) {
+        errorElement.style.display = "none";
+        answersheetSection.style.display = "block";
+        
+        // Populate the answer sheet
+        const answersheetContent = document.getElementById('answersheet-content');
+        answersheetContent.innerHTML = ""; // Clear previous content
+        questions.forEach((question, idx) => {
+            const studentAnswer = answers[idx];
+            const isCorrect = studentAnswer === question.correct;
+            answersheetContent.innerHTML += `
+                <li align="left">
+                    <p align="left"><strong>Q${idx + 1}:</strong> ${question.question}</p>
+                    <p align="left"><strong>Your Answer:</strong> ${question.options[studentAnswer] || "No Answer"}</p>
+                    <p align="left"><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
+                    <p align="left" style="color: ${isCorrect ? 'green' : 'red'};">${isCorrect ? 'Correct' : 'Incorrect'}</p>
+                </li>
+            `;
+        });
+    } else {
+        errorElement.style.display = "block";
+        answersheetSection.style.display = "none";
+    }
+});
+// Disable right-click menu
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+
+// Disable common key combinations for opening developer tools
+document.addEventListener('keydown', (e) => {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, etc.
+    if (
+        e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) || 
+        (e.ctrlKey && e.key === "U")
+    ) {
+        e.preventDefault();
+        alert("Developer tools are disabled!");
+    }
+});
+
+// Detect and react to open developer tools
+const detectDevTools = () => {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function () {
+            alert("Developer tools detected! Closing the exam.");
+            window.location.href = "https://example.com"; // Redirect to another page or handle as needed
+        }
+    });
+    console.log(element);
+};
+
+// Periodically check for developer tools
+setInterval(detectDevTools, 10000);
+
+
+ 
+    </script>
+</body>
+</html>
