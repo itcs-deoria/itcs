@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px; 
+            margin: auto;
+            padding: 20px;
+        }
+        .form-section, .exam-section, .result-section {
+            display: none;
+        }
+        .form-section.active, .exam-section.active, .result-section.active {
+            display: block;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question-section {
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #fe4f4f, #001cfe);
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button {
+    background: #ff00b9;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.status {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.question-section {
+    margin: 20px 0;
+    background: #000000;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+    font-size: 22px;
+}
+
+.question-section h3 {
+    color: yellow;
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.buttons {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.buttons button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.result-section {
+    text-align: center;
+}
+
+.result-section p {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .timer {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .question-section {
+        padding: 15px;
+    }
+}
+/* Modal styles */
+#cheating-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    overflow: auto;
+}
+
+#cheating-modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+#cheating-modal h2 {
+    color: #ff0000;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#cheating-modal p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#cheating-modal button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #ff00b9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cheating-modal button:hover {
+    background: #0056b3;
+}
+#result-details{
+    text-align: left;
+   align-content: center;
+}
+
+
+    </style>
+</head> 
+<body>
+    <div class="container">
+        <div class="form-section active" id="form-section">
+        
+            <h2>Student Login</h2>
+           
+            <h2 style="color:red;" ><marquee behavior="alternet" direction="right" >Excel Test</marquee> </h2>
+          
+            <form id="login-form">
+                <label for="student-id">🆔 Student ID:  (if you don't have use this:"1001")</label><br>
+                <input type="number" id="student-id" required placeholder="Enter your ID Card Number" title="I-Card Number"><br><br>
+                <label for="student-name">👨‍🎓 Student Name:</label><br>
+                <input type="text" id="student-name" required placeholder="Enter your Full Name" title="Enter Your Name"><br><br>
+                <label for="exam-code">📝 Exam Code:</label><br>
+                <input type="password" id="exam-code" required placeholder="Enter Exam Code" title="Ask Teacher for the Code"><br><br>
+                <button type="submit">🚀 Start Exam 🚀</button>
+            </form>
+        </div>
+        <div class="exam-section" id="exam-section">
+            <div class="timer" id="timer">Time Left: ⏳ 00:00:00</div>
+            <div class="status">
+                Total Questions: <span id="total-questions"></span>, Attempted: <span id="attempted-questions">0</span>
+            </div>
+            <h2>Excel Test "IT Computer Studies"</h2>
+            <h2 style="color: red;"><marquee behavior="alternet">Excel Test</marquee></h2>
+            <div class="question-section" id="question-section"></div>
+            <div class="buttons">
+                <button id="prev-btn">Previous</button>
+                <button id="next-btn">Next</button>
+                <button id="submit-btn" style="display:none;">Submit</button>
+            </div>
+        </div>
+        <div class="result-section" id="result-section">
+            <h2>🎓 Exam Result 🎓</h2>
+            <div id="result-details"></div>
+            <div id="verification-section">
+                <label for="verification-code">Enter Verification Code to View Answer Sheet: (For code ask to Teacher )</label>
+                <input type="password" id="verification-code" placeholder="Enter Code" />
+                <button id="verify-code-btn">Verify</button>
+                <p id="verification-error" style="color: red; display: none;">Invalid Code! Please try again.</p>
+            </div>
+            <div id="answersheet-section" style="display: none;">
+                <h3 style="color:yellow">Your Answer Sheet:</h3>
+                <ul id="answersheet-content"></ul>
+                <button id="download-btn">Download Answer Sheet</button>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Modal HTML -->
+<div id="cheating-modal">
+    <div class="modal-content">
+        <h2>📱👀💻Cheating Detected📱👀💻</h2>
+        <p id="cheating-content">If this happens again, it will be your last warning. After this, your exam will be auto-submitted..</p>
+        <button id="cheating-ok-btn">OK</button>
+    </div>
+</div>
+
+    <script>
+const questions = [
+  { "question": "Excel में एक Cell और Active Cell में क्या अंतर है?", "options": ["Same होते हैं", "Cell सिर्फ चयन होता है, Active Cell एडिट किया जा सकता है", "Cell में फॉर्मूला होता है", "Active Cell हटाया नहीं जा सकता"], "correct": 1 },
+  { "question": "Excel में सबसे ऊपर दिखने वाला Toolbar क्या कहलाता है?", "options": ["Ribbon", "Quick Access Toolbar", "Name Box", "Formula Bar"], "correct": 1 },
+  { "question": "Formula Bar का उपयोग किसलिए होता है?", "options": ["Zoom करने के लिए", "Formatting के लिए", "Formula लिखने के लिए", "Sheet बदलने के लिए"], "correct": 2 },
+  { "question": "Workbook और Worksheet में क्या अंतर है?", "options": ["Same होते हैं", "Workbook में एक ही Worksheet होती है", "Workbook में कई Worksheet हो सकते हैं", "Worksheet में कई Workbook हो सकते हैं"], "correct": 2 },
+  { "question": "Cell Selection के लिए किसे Use किया जाता है?", "options": ["Ctrl", "Alt", "Mouse या Keyboard", "Tab"], "correct": 2 },
+  { "question": "Bold, Italic, और Underline किस Category में आते हैं?", "options": ["Alignment", "Formatting", "Font", "View"], "correct": 2 },
+  { "question": "Cell को Merge करने के लिए किस Option का उपयोग होता है?", "options": ["Wrap Text", "Orientation", "Merge", "Center"], "correct": 2 },
+  { "question": "Cell में Number Formatting के लिए कौन सा Tab उपयोगी है?", "options": ["Home", "Insert", "Number", "Data"], "correct": 0 },
+  { "question": "Series जैसे Jan, Feb, Mar Auto Fill के लिए किस Feature का उपयोग होता है?", "options": ["AutoCorrect", "Data Validation", "Fill Handle", "Pivot Table"], "correct": 2 },
+  { "question": "Sheet का रंग बदलने के लिए क्या किया जाता है?", "options": ["Format Painter", "Tab Color", "Data Bar", "Conditional Formatting"], "correct": 1 },
+  { "question": "Excel में Editing शुरू करने के लिए कौन सा Key प्रयोग होता है?", "options": ["F1", "F2", "Ctrl + E", "Alt"], "correct": 1 },
+  { "question": "Auto Series में 'Q1', 'Q2' किस प्रकार के उदाहरण हैं?", "options": ["Text", "Number", "Custom List", "Quarterly Series"], "correct": 3 },
+  { "question": "Excel में Addition का Formula क्या होगा?", "options": ["=A1+A2", "=ADD(A1,A2)", "=SUMA(A1,A2)", "=PLUS(A1,A2)"], "correct": 0 },
+  { "question": "BODMAS में 'M' का क्या अर्थ है?", "options": ["Minus", "Multiplication", "Merge", "Measure"], "correct": 1 },
+  { "question": "=(2+2)*2 का उत्तर Excel में क्या होगा?", "options": ["6", "8", "4", "2"], "correct": 1 },
+  { "question": "Excel में Formula किस symbol से शुरू होता है?", "options": ["@", "#", "=", "+"], "correct": 2 },
+  { "question": "Excel में Total प्राप्त करने के लिए कौन सा Function प्रयोग होता है?", "options": ["=add()", "=sum()", "=total()", "=count()"], "correct": 1 },
+  { "question": "Excel में Highest Value निकालने के लिए कौन सा Function है?", "options": ["=high()", "=top()", "=max()", "=greatest()"], "correct": 2 },
+  { "question": "Excel में Lowest Value निकालने के लिए कौन सा Function प्रयोग करते हैं?", "options": ["=min()", "=low()", "=least()", "=small()"], "correct": 0 },
+  { "question": "Pre-defined formula को Excel में क्या कहते हैं?", "options": ["AutoText", "Macro", "Functions", "Shortcuts"], "correct": 2 },
+  { "question": "Function में parameter किसे कहते हैं?", "options": ["Function का नाम", "Formula बार", "ब्रैकेट के अंदर दिया गया Data", "Cell का Address"], "correct": 2 },
+  { "question": "Function लिखने की सही विधि क्या है?", "options": ["=Function", "=Function()", "Function()", "=Function["], "correct": 1 },
+  { "question": "=SUM(A1:A5) में A1:A5 क्या दर्शाता है?", "options": ["1 Cell", "5 Rows", "Cell Address", "Range"], "correct": 3 },
+  { "question": "Cell Address द्वारा Formula लिखने से क्या फायदा होता है?", "options": ["Calculation Possible नहीं", "Value Static रहती है", "Value Auto Update होती है", "Cell Delete हो जाता है"], "correct": 2 },
+  { "question": "Excel में Data को Center में Align करने के लिए कौन सा Option है?", "options": ["Wrap Text", "Middle Align", "Center Align", "Text Direction"], "correct": 2 },
+  { "question": "Name Box में क्या दिखाई देता है?", "options": ["Workbook का नाम", "Cell का नाम या Address", "Worksheet की संख्या", "Formula"], "correct": 1 },
+  { "question": "Quick Access Toolbar में क्या होता है?", "options": ["Zoom Tools", "Frequently Used Commands", "Sheet Names", "File Menu"], "correct": 1 },
+  { "question": "Zoom Slider Excel में कहाँ होता है?", "options": ["Top Left", "Bottom Right", "Center", "Top Right"], "correct": 1 },
+  { "question": "Copy-Paste के लिए कौन सी Command है?", "options": ["Ctrl+C & Ctrl+V", "Alt+C & Alt+V", "Ctrl+X & Ctrl+V", "Ctrl+D & Ctrl+P"], "correct": 0 },
+  { "question": "Excel में एक Cell को Move करने के लिए क्या उपयोग होता है?", "options": ["Drag", "Cut-Paste", "Move Tool", "All of these"], "correct": 3 }
+];
+questions.push(
+  { "question": "Excel में Ribbon क्या होता है?", "options": ["Formula लिखने का जगह", "Menu Bar", "Command Options का Group", "Scroll Bar"], "correct": 2 },
+  { "question": "Scroll Bar का उपयोग किसलिए किया जाता है?", "options": ["Zoom के लिए", "Navigation के लिए", "Formatting के लिए", "Formula देखने के लिए"], "correct": 1 },
+  { "question": "Sheet में कितने Column होते हैं Excel 2016 में?", "options": ["1048576", "16384", "65536", "100000"], "correct": 1 },
+  { "question": "Workbook को Save करने का shortcut क्या है?", "options": ["Ctrl + P", "Ctrl + C", "Ctrl + S", "Ctrl + V"], "correct": 2 },
+  { "question": "Wrap Text का उपयोग किसलिए होता है?", "options": ["Text को Hide करने के लिए", "Text को Merge करने के लिए", "Text को Cell में समेटने के लिए", "Text को Delete करने के लिए"], "correct": 2 },
+  { "question": "Excel में Orientation से क्या बदलता है?", "options": ["Cell Size", "Font Style", "Text की दिशा", "Background Color"], "correct": 2 },
+  { "question": "Text को Bold करने के लिए shortcut क्या है?", "options": ["Ctrl + U", "Ctrl + I", "Ctrl + B", "Ctrl + T"], "correct": 2 },
+  { "question": "Cell Formatting में Currency किसलिए प्रयोग होती है?", "options": ["Date Format के लिए", "Amount दर्शाने के लिए", "Text Wrap करने के लिए", "Cell Height बढ़ाने के लिए"], "correct": 1 },
+  { "question": "Excel में Border लगाने का विकल्प किस Tab में होता है?", "options": ["Insert", "Home", "Data", "View"], "correct": 1 },
+  { "question": "Background Color बदलने का shortcut कौन सा है?", "options": ["No Shortcut", "Alt + H + H", "Ctrl + Shift + C", "Ctrl + H"], "correct": 1 },
+  { "question": "Font Color बदलने के लिए किस icon का प्रयोग होता है?", "options": ["A with underline", "Paint Bucket", "Fx", "Sigma"], "correct": 0 },
+  { "question": "Excel में Cell को Delete करने के लिए क्या करें?", "options": ["Right Click → Delete", "Alt + D", "Ctrl + Backspace", "Shift + Tab"], "correct": 0 },
+  { "question": "Series Fill में 'Serial 001' किसका उदाहरण है?", "options": ["Formula", "Function", "Custom Text Series", "Special Character"], "correct": 2 },
+  { "question": "Excel में Cell Address किस format में होता है?", "options": ["RowColumn", "ColumnRow", "Row.Row", "Col-Col"], "correct": 1 },
+  { "question": "Cell A1 में 10 और B1 में 20 है, =A1+B1 का Result क्या होगा?", "options": ["10", "20", "30", "Error"], "correct": 2 },
+  { "question": "=120*(120-120) का Result क्या होगा?", "options": ["120", "0", "14400", "Error"], "correct": 1 },
+  { "question": "=11-11*(1+1) का Result क्या होगा?", "options": ["0", "11", "-11", "22"], "correct": 0 },
+  { "question": "Excel में =SUM(A1,A2,A3) और =SUM(A1:A3) में क्या अंतर है?", "options": ["Result अलग आता है", "कोई अंतर नहीं", "पहला Fast होता है", "दूसरा गलत है"], "correct": 1 },
+  { "question": "Function का दूसरा नाम क्या है?", "options": ["Pre-Defined Formula", "Manual Formula", "Auto Sum", "Ribbon Tool"], "correct": 0 },
+  { "question": "=MAX(10,20,30) का उत्तर क्या होगा?", "options": ["10", "20", "30", "Error"], "correct": 2 },
+  { "question": "=MIN(5,15,3) का उत्तर क्या होगा?", "options": ["15", "3", "5", "Error"], "correct": 1 },
+  { "question": "Range Selection का मतलब क्या होता है?", "options": ["Single Cell", "Multiple Cell Address का Group", "Only Formula", "Only Function"], "correct": 1 },
+  { "question": "Excel में कौन सा function total निकालता है?", "options": ["=avg()", "=total()", "=sum()", "=add()"], "correct": 2 },
+  { "question": "Excel में Cell Address A1 में 5 और A2 में 6 हो, =A1*A2 क्या देगा?", "options": ["11", "30", "56", "1"], "correct": 1 },
+  { "question": "Excel में कौन सा फॉर्मूला गलत है?", "options": ["=SUM(A1:A5)", "=ADD(A1,A2)", "=A1+A2", "=MAX(A1:A10)"], "correct": 1 },
+  { "question": "Excel में editing करने के दो तरीके क्या हैं?", "options": ["F2 और Double Click", "Enter और Tab", "Shift और Alt", "Ctrl और Delete"], "correct": 0 },
+  { "question": "Formula और Function में अंतर क्या है?", "options": ["कोई अंतर नहीं", "Formula में हम logic बनाते हैं, Function predefined होता है", "Function slow होता है", "Formula सिर्फ Total के लिए होता है"], "correct": 1 },
+  { "question": "Excel में Series Fill कहाँ से शुरू होता है?", "options": ["Right Click", "Data Tab", "Fill Handle", "View Tab"], "correct": 2 },
+  { "question": "Excel में Tab Color बदलने से क्या होता है?", "options": ["Sheet Delete हो जाती है", "Sheet Identify करना आसान होता है", "Sheet Lock हो जाती है", "Sheet Print नहीं होती"], "correct": 1 },
+  { "question": "Excel में Column को Select करने के लिए क्या करें?", "options": ["Column के Letter पर Click करें", "Row नंबर पर Click करें", "Cell में Right Click करें", "File Menu पर जाएं"], "correct": 0 }
+);
+questions.push(
+  { "question": "Excel में Worksheet को Rename करने के लिए क्या किया जाता है?", "options": ["Double Click Tab", "Ctrl + R", "Home Tab", "Alt + W + R"], "correct": 0 },
+  { "question": "एक Cell का Default Alignment क्या होता है अगर उसमें Number लिखा हो?", "options": ["Left", "Right", "Center", "Top"], "correct": 1 },
+  { "question": "Text के लिए Default Alignment क्या है?", "options": ["Right", "Left", "Center", "Middle"], "correct": 1 },
+  { "question": "Excel में Ctrl + X का उपयोग क्या करता है?", "options": ["Cut", "Copy", "Paste", "Undo"], "correct": 0 },
+  { "question": "Excel में एक Cell को Duplicate करने के लिए क्या करें?", "options": ["Ctrl + X", "Ctrl + D", "Ctrl + V", "Ctrl + R"], "correct": 1 },
+  { "question": "Sheet को Move करने के लिए क्या किया जाता है?", "options": ["Drag करके", "Ctrl + M", "Home Tab", "Insert Tab"], "correct": 0 },
+  { "question": "Sheet के बीच Scroll करने के लिए कौन सी bar होती है?", "options": ["Formula Bar", "Ribbon Bar", "Scroll Bar", "Title Bar"], "correct": 2 },
+  { "question": "एक Cell को Select करने के लिए क्या उपयोग करें?", "options": ["Mouse Click", "Alt + F4", "Name Box", "Nothing"], "correct": 0 },
+  { "question": "Excel में एक Workbook में कितनी Worksheets हो सकती हैं?", "options": ["255", "Unlimited", "1", "256"], "correct": 1 },
+  { "question": "Excel में By Default Workbook का नाम क्या होता है?", "options": ["Book 1", "Sheet1", "Excel File", "Untitled"], "correct": 0 },
+  { "question": "Excel में Undo करने का Shortcut क्या है?", "options": ["Ctrl + Z", "Ctrl + Y", "Ctrl + U", "Ctrl + A"], "correct": 0 },
+  { "question": "Redo करने का Shortcut क्या है?", "options": ["Ctrl + Z", "Ctrl + Y", "Ctrl + R", "Ctrl + E"], "correct": 1 },
+  { "question": "Text Orientation बदलने का विकल्प किस Tab में है?", "options": ["Insert", "View", "Home", "Data"], "correct": 2 },
+  { "question": "Excel में Value Type करने के बाद Enter दबाने से क्या होता है?", "options": ["Cell Save होता है", "Next Row Select होती है", "Workbook Save होता है", "Formula Delete होता है"], "correct": 1 },
+  { "question": "Number Format को Currency में बदलने के लिए कौन सा Symbol उपयोगी होता है?", "options": ["₹", "$", "%", "A"], "correct": 0 },
+  { "question": "Excel में Border लगाने के लिए कौन सा Tool है?", "options": ["Border Icon in Home Tab", "Insert Table", "Cell Merge", "Color Picker"], "correct": 0 },
+  { "question": "Excel में Cell A1 में 'YourName 1' टाइप करके Fill Handle Drag करने पर आगे क्या आएगा?", "options": ["YourName 2", "YourName", "1,2,3", "Name1"], "correct": 0 },
+  { "question": "Auto Fill Series के लिए Excel किस Logic का उपयोग करता है?", "options": ["Manual Input", "Pattern Recognition", "Random Values", "Calculation Only"], "correct": 1 },
+  { "question": "Cell A1 में 5 और A2 में 10 हो, तो =A1-A2 का उत्तर क्या होगा?", "options": ["-5", "5", "10", "15"], "correct": 0 },
+  { "question": "Excel में किसी Cell का Address क्या होता है?", "options": ["Row Number", "Column Letter", "Column + Row", "Name Box"], "correct": 2 },
+  { "question": "Excel में Chart बनाने के लिए किस Tab का उपयोग किया जाता है?", "options": ["Insert", "Data", "Review", "File"], "correct": 0 },
+  { "question": "Excel में Formula दिखाने के लिए कौन सा Shortcut है?", "options": ["Ctrl + `", "Ctrl + F2", "Alt + =", "Shift + F3"], "correct": 0 },
+  { "question": "Function Wizard खोलने के लिए कौन सा Shortcut है?", "options": ["Shift + F3", "Ctrl + F1", "Alt + F4", "F9"], "correct": 0 },
+  { "question": "Excel में Chart को Insert करने का Shortcut क्या है?", "options": ["F11", "F2", "Alt + F1", "A और C दोनों"], "correct": 3 },
+  { "question": "Excel में Range Select करने का तरीका क्या है?", "options": ["Click and Drag", "Ctrl + Click", "Shift + Arrow Keys", "All of the above"], "correct": 3 },
+  { "question": "किस Function से Average Value प्राप्त की जाती है?", "options": ["=mean()", "=avg()", "=average()", "=meanvalue()"], "correct": 2 },
+  { "question": "कौन सा Function Counting के लिए प्रयोग होता है?", "options": ["=count()", "=number()", "=len()", "=total()"], "correct": 0 },
+  { "question": "Excel में Column के नाम कैसे होते हैं?", "options": ["Numbers", "Letters", "Symbols", "Formulas"], "correct": 1 },
+  { "question": "Excel में 'Ctrl + Arrow Key' किसलिए प्रयोग होता है?", "options": ["Formatting", "Last Cell पर जाने के लिए", "Highlight", "Zoom"], "correct": 1 },
+  { "question": "Excel में Tab से क्या होता है?", "options": ["Next Cell Select होती है", "Formula Delete होता है", "File Save होती है", "Zoom होता है"], "correct": 0 }
+);
+questions.push(
+  { "question": "अगर Cell A1 में =10+5*2 है, तो Excel में इसका परिणाम क्या होगा?", "options": ["30", "20", "25", "35"], "correct": 2 },
+  { "question": "यदि Cell A1 में 100 और B1 में 0 है, तो =A1/B1 का परिणाम क्या होगा?", "options": ["0", "#DIV/0!", "100", "Error 100"], "correct": 1 },
+  { "question": "यदि एक Cell में Formula =A1+A2 दिया गया है, और A2 में फिर से A1+A2 डाल दिया जाए, तो क्या होगा?", "options": ["Formula Circular Reference देगा", "Excel Crash करेगा", "Formula चलेगा", "Result 0 होगा"], "correct": 0 },
+  { "question": "Excel में Absolute Cell Reference को कैसे दर्शाते हैं?", "options": ["A1", "$A$1", "A$1", "$A1"], "correct": 1 },
+  { "question": "यदि आप एक Cell को Merge कर देते हैं, तो उस Cell में कौन सा Data रहता है?", "options": ["Left-most Cell का", "Right-most Cell का", "All Data", "Last Cell का"], "correct": 0 },
+  { "question": "Excel में COUNT() और COUNTA() में क्या अंतर है?", "options": ["कोई अंतर नहीं", "COUNT केवल numbers गिनता है, COUNTA सभी non-empty cells", "COUNT text गिनता है, COUNTA नहीं", "COUNTA केवल blank cells गिनता है"], "correct": 1 },
+  { "question": "यदि आप एक Custom List बना लेते हैं (जैसे Mon, Tue...), तो Excel उसे Series Fill में कैसे पहचानेगा?", "options": ["Manual Input से", "Custom List memory से", "Function से", "Formula से"], "correct": 1 },
+  { "question": "Formula =SUM(A1:A5)*AVERAGE(B1:B5) सबसे पहले कौन सा Function Evaluate करेगा?", "options": ["SUM()", "AVERAGE()", "दोनों एक साथ", "किसी का नहीं"], "correct": 1 },
+  { "question": "Excel में #NAME? error का मतलब क्या होता है?", "options": ["Formula में Undefined Function है", "Divide by Zero", "Data Type Mismatch", "Cell खाली है"], "correct": 0 },
+  { "question": "यदि आप एक Cell में =A1+B1 टाइप करते हैं और A1 खाली है, तो क्या होगा?", "options": ["Error आएगा", "Result B1 के बराबर होगा", "Zero आएगा", "Formula हट जाएगा"], "correct": 1 }
+);
+
+
+
+
+
+
+        let currentQuestion = 0;
+        let attemptedQuestions = 0;
+        let answers = Array(questions.length).fill(null);
+
+        // Shuffle an array (Fisher-Yates Algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        // Shuffle questions before starting the exam
+        shuffleArray(questions);
+
+        // Shuffle options for each question and adjust the correct index
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+
+            // Update the correct index
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const examCode = document.getElementById('exam-code').value;
+    if (examCode === "abcd") {
+        // Randomize questions and options
+        shuffleArray(questions); // Shuffle questions
+        questions.forEach(question => {
+            const originalOptions = [...question.options];
+            shuffleArray(question.options);
+            question.correct = question.options.indexOf(originalOptions[question.correct]);
+        });
+
+        document.getElementById('form-section').classList.remove('active');
+        document.getElementById('exam-section').classList.add('active');
+        startTimer( 60 * 60); // 30 minutes
+        showQuestion(); // Display the first question
+        document.getElementById('total-questions').textContent = questions.length;
+    } else {
+        alert('Invalid Exam Code!');
+    }
+});
+
+
+        // Timer
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const timerInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').textContent = `Time Left:⏳ ${minutes}:${seconds}`;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        // Show question
+        function showQuestion() {
+            const questionSection = document.getElementById('question-section');
+            const questionData = questions[currentQuestion];
+            questionSection.innerHTML = `
+                <h3>Q${currentQuestion + 1}: ${questionData.question}</h3>
+                ${questionData.options.map((opt, idx) => `
+                    <label>
+                        <input type="radio" name="answer" value="${idx}" ${answers[currentQuestion] === idx ? "checked" : ""}>
+                        ${opt}
+                    </label><br>
+                `).join('')}
+            `;
+            document.getElementById('submit-btn').style.display = currentQuestion === questions.length - 1 ? 'inline' : 'none';
+        }
+
+        // Button event listeners
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestion > 0) currentQuestion--;
+            showQuestion();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            saveAnswer();
+            if (currentQuestion < questions.length - 1) currentQuestion++;
+            showQuestion();
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            if (confirm("Are you sure you want to submit?")) {
+                submitExam();
+            }
+        });
+
+        // Save answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = parseInt(selectedOption.value);
+                if (answers[currentQuestion] === null) attemptedQuestions++;
+                answers[currentQuestion] = answer;
+                document.getElementById('attempted-questions').textContent = attemptedQuestions;
+            }
+        }
+
+        
+
+
+
+      
+// Anti-cheating: Detect tab switching or minimizing
+let isExamFinished = false; // Variable to track if the exam is finished
+let tabSwitchCount = -2; // variable to track the number of tab
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !isExamFinished) {
+        tabSwitchCount++;
+        if(tabSwitchCount === 1 ){
+        // Show the cheating modal
+        const modal = document.getElementById('cheating-modal');
+                modal.style.display = 'block';
+                document.getElementById('cheating-content').innerHTML = '🚨 If this happens again, it will be your last warning. After this, your exam will be auto-submitted. ⚠️.'
+        } else if (tabSwitchCount === 2){
+            // Show the cheating modal
+            const modal = document.getElementById('cheating-modal');
+                            modal.style.display = 'block';
+                        
+                         document.getElementById('cheating-content').innerHTML = 'Your 📝 test is ⚙️ Auto-Submitted.'
+              // Automatically submit the exam
+        submitExam();
+        }
+    }
+});
+    // if (document.hidden && !isExamFinished) {
+    //     // Show the cheating modal
+    //     const modal = document.getElementById('cheating-modal');
+    //     modal.style.display = 'block';
+
+    //     // Automatically submit the exam
+    //     submitExam();
+    // }
+
+
+// Handle the "OK" button in the modal
+document.getElementById('cheating-ok-btn').addEventListener('click', () => {
+    const modal = document.getElementById('cheating-modal');
+    modal.style.display = 'none';
+});
+
+// Submit exam function
+function submitExam() {
+    saveAnswer();
+    document.getElementById('exam-section').classList.remove('active');
+    document.getElementById('result-section').classList.add('active');
+
+    // Calculate the score
+    const marksPerQuestion = 1; // Define how many marks each question carries
+    let score = answers.filter((ans, idx) => ans === questions[idx].correct).length * marksPerQuestion;
+
+    // let percentage = (score / questions.length) * 100;
+
+    // Determine Pass or Fail
+    let passPercent = 50;
+    let percentage = (score / (questions.length * marksPerQuestion)) * 100;
+    let resultStatus = percentage >= passPercent ? 'Pass' : 'Fail';
+
+   
+
+
+    // Display result details
+    let resultHTML = `
+        
+        <p style="font-size: 17px;">Student ID 🆔 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${document.getElementById('student-id').value}</p>
+        <p style="font-size: 17px;">Student Name 🧑‍🎓 :&nbsp;&nbsp; ${document.getElementById('student-name').value}</p>
+        <p style="font-size: 17px;">Total Exam Marks 📊 :&nbsp;&nbsp; ${questions.length * marksPerQuestion}</p>
+        <p style="font-size: 17px;">Passing Marks 🏅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${((questions.length * marksPerQuestion)* passPercent)/100} Marks</p>
+        <p style="font-size: 17px;">Attempted ✅:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${attemptedQuestions}</p>
+        <p style="font-size: 17px;">Total Questions 📚:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${questions.length}</p>
+        <p style="font-size: 17px;">Score 🎯 : <h2 style="font-size: 45px; color:Yellow; text-align:center;">${score}&nbsp; Marks </h2></p>
+        <p style="font-size: 17px;">Status 🏆 : <h1 style="font-size: 70px; color:red; text-align:center;">${resultStatus}</p></h1>
+        <h3 style="color:yellow; font-size: 24px;">Your Answer Sheet:</h3>
+        
+        <ul>`;
+
+  
+
+    resultHTML += `</ul>`;
+
+    // // Display the result
+    document.getElementById('result-details').innerHTML = resultHTML;
+
+    // Send data to Google Sheets
+    const formData = {
+        studentId: document.getElementById('student-id').value,
+        studentName: document.getElementById('student-name').value,
+        totalQuestions: questions.length,
+        score: score,
+        resultStatus: resultStatus
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbwOGgVEoUQv-PDrsjHufr8Dj4lG9LScaeTYQ4YoPgxy4GkJlwemUPqkC9RIDzvY1neU/exec', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    }).then(response => response.json())
+      .then(data => {
+          console.log("Data saved to Google Sheets:", data);
+          alert('Result is Saved!!');
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('May be the data is saved!!')
+      });
+
+    // Disable anti-cheating after the result is shown
+    isExamFinished = true;
+}
+
+// Add this function inside the script tag
+document.getElementById('download-btn').addEventListener('click', function() {
+    // Prepare the content as a string (plain text format)
+    let answerText = `Student ID: ${document.getElementById('student-id').value}\n`;
+    answerText += `Student Name: ${document.getElementById('student-name').value}\n\n`;
+    answerText += 'Answers:\n';
+    
+    // Loop through answers and format them into text
+    answers.forEach((answer, idx) => {
+        const question = questions[idx];
+        const selectedOptionText = question.options[answer]; // Get the text of the selected option
+        const correctOptionText = question.options[question.correct]; // Get the text of the correct option
+        
+        answerText += `Q${idx + 1}: ${question.question}\n`;
+        answerText += `Your Answer: ${selectedOptionText || "No Answer"}\n`;
+        answerText += `Correct Answer: ${correctOptionText}\n\n`;
+    });
+    
+    // Add the score and total questions at the end
+    answerText += `Score: ${answers.filter((ans, idx) => ans === questions[idx].correct).length} / ${questions.length}\n`;
+
+    // Create a Blob from the plain text content
+    const blob = new Blob([answerText], { type: 'text/plain' });
+
+    // Create an anchor element for triggering the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${document.getElementById('student-id').value}_${document.getElementById('student-name').value}_answer_sheet.txt`; // Filename
+
+    // Trigger the download
+    // link.click();
+});
+
+// Predefined secure code
+const secureCode = "786";
+
+// Handle verification
+document.getElementById('verify-code-btn').addEventListener('click', () => {
+    const enteredCode = document.getElementById('verification-code').value;
+    const errorElement = document.getElementById('verification-error');
+    const answersheetSection = document.getElementById('answersheet-section');
+    
+    if (enteredCode === secureCode) {
+        errorElement.style.display = "none";
+        answersheetSection.style.display = "block";
+        
+        // Populate the answer sheet
+        const answersheetContent = document.getElementById('answersheet-content');
+        answersheetContent.innerHTML = ""; // Clear previous content
+        questions.forEach((question, idx) => {
+            const studentAnswer = answers[idx];
+            const isCorrect = studentAnswer === question.correct;
+            answersheetContent.innerHTML += `
+                <li align="left">
+                    <p align="left"><strong>Q${idx + 1}:</strong> ${question.question}</p>
+                    <p align="left"><strong>Your Answer:</strong> ${question.options[studentAnswer] || "No Answer"}</p>
+                    <p align="left"><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
+                    <p align="left" style="color: ${isCorrect ? 'green' : 'red'};">${isCorrect ? 'Correct' : 'Incorrect'}</p>
+                </li>
+            `;
+        });
+    } else {
+        errorElement.style.display = "block";
+        answersheetSection.style.display = "none";
+    }
+});
+// Disable right-click menu
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+
+// Disable common key combinations for opening developer tools
+document.addEventListener('keydown', (e) => {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, etc.
+    if (
+        e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) || 
+        (e.ctrlKey && e.key === "U")
+    ) {
+        e.preventDefault();
+        alert("Developer tools are disabled!");
+    }
+});
+
+// Detect and react to open developer tools
+const detectDevTools = () => {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function () {
+            alert("Developer tools detected! Closing the exam.");
+            window.location.href = "https://example.com"; // Redirect to another page or handle as needed
+        }
+    });
+    console.log(element);
+};
+
+// Periodically check for developer tools
+setInterval(detectDevTools, 10000);
+
+
+ 
+    </script>
+</body>
+</html>
