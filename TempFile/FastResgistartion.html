@@ -3,93 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top 10 Registration Students</title>
+  <title>Typing Course Scholarship Program | ITCS</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #43cea2, #185a9d);
+      font-family: Arial, sans-serif;
+      background: #f5f8ff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #2563eb;
       color: white;
       text-align: center;
-      padding: 40px;
+      padding: 20px;
     }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    header h1 {
+      margin: 0;
     }
-    p {
-      font-size: 18px;
-      margin: 15px 0;
-    }
-    .highlight {
-      font-size: 22px;
-      font-weight: bold;
-      color: #ffeb3b;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 15px 30px;
-      background: #ff5722;
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #e64a19;
-      transform: scale(1.05);
-    }
-    .note {
-      margin-top: 25px;
-      font-size: 15px;
-      opacity: 0.9;
-    }
-    .offer-box {
-      margin-top: 30px;
-      background: rgba(255, 255, 255, 0.15);
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .offer-box b {
-      color: #ffeb3b;
+    h2 {
+      color: #2563eb;
     }
-    .warning {
+    .offer-box {
+      border: 2px dashed #2563eb;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 10px;
+      background: #f0f6ff;
+    }
+    .hint-box {
       margin-top: 20px;
-      background: rgba(255, 0, 0, 0.2);
       padding: 15px;
       border-radius: 10px;
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      cursor: pointer;
+    }
+    .hint-content {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      border-radius: 5px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .btn {
+      display: block;
+      margin: 25px auto 0;
+      background: #2563eb;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: bold;
-      color: #ffeb3b;
+      text-align: center;
+      transition: 0.3s;
+      max-width: 220px;
+    }
+    .btn:hover {
+      background: #1746a2;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>ITCS Typing Scholarship Program</h1>
+    <p>Boost Your Typing Speed in Just 1 Month 🚀</p>
+  </header>
 
-  <h1>🏆 Top 10 Registration Students 🏆</h1>
-  <p class="highlight">Register Fast – Your Speed Decides Your Reward! 🚀</p>
- 
+  <div class="container">
+    <h2>💡 About the Course</h2>
+    <p>यह एक <b>1 Month Typing Course</b> है जिसकी <b>Real Fees ₹800/-</b> है।  
+       लेकिन आपके पास इसे सिर्फ <b>₹400/-</b> में करने का मौका है।  
+       यह skill आपके exams, job interviews और future career में बहुत काम आएगी।</p>
 
-  <div class="offer-box">
-    <p>✅ <b>If you are in the Top 10:</b> You will get <b>50% OFF</b> instantly – which means your course fees will be only <b>₹400</b>.</p>
-    <p>✅ <b>If you are not in the Top 10:</b> Don’t worry! You will be <b>automatically selected</b> for the Scholarship Exam.  
-       Be prepared – it’s your chance to still grab the discount! 🎯</p>
+    <div class="offer-box">
+      <h2>🔥 Offer 1: Top 10 Registration</h2>
+      <p>अगर आप जल्दी register करते हैं और <b>Top 10 Students</b> में आते हैं → आपकी course fees सिर्फ <b>₹400/-</b> होगी (50% OFF).  
+      <b>Note:</b> Fees update करने के बाद ही आप Top 10 में count होंगे।</p>
+    </div>
+
+    <div class="offer-box">
+      <h2>🔥 Offer 2: Scholarship Exam</h2>
+      <p>अगर आप Top 10 में नहीं आते → आप automatic <b>Scholarship Exam</b> में शामिल होंगे।</p>
+      <ul>
+        <li>Total Questions: 50</li>
+        <li>Passing Marks: 60%</li>
+        <li>Exam Date: <b>15-Sep-2025</b></li>
+      </ul>
+      <p>Exam crack करने पर भी आपकी fees सिर्फ <b>₹400/-</b> हो जाएगी।</p>
+    </div>
+
+    <div class="hint-box" onclick="toggleHint()">
+      🎁 Click here to reveal exam hints!
+      <div id="hint-content" class="hint-content">
+        <h3>📘 Syllabus Overview</h3>
+        <ul>
+          <li>Fundamentals of Computer Operations (Input/Output)</li>
+          <li>Common Keyboard Shortcuts (e.g., Ctrl+C, Ctrl+V, Alt+Tab)</li>
+          <li>Introduction to Notepad & Microsoft Word</li>
+          <li>Fundamentals of Internet and Email Usage</li>
+          <li>Basic Concepts of Computer Hardware & Software</li>
+        </ul>
+        <p>ये hints ऐसे हैं जैसे आपको कोई छोटा treasure मिल गया हो! 🗝️</p>
+      </div>
+    </div>
+
+    <a href="https://forms.gle/YTcRfvni894hsa9E7" class="btn">Register Now</a>
   </div>
 
-  <!-- Important Warning -->
-  <div class="warning">
-    ⚠️ Please Note: Your position in the <b>Top 10</b> will be confirmed <u>only after your course fees is updated</u>.  
-    Without completing the payment, your seat is not secure.
-  </div>
-
-  <!-- Google Form Link -->
-  <a href="https://forms.gle/YTcRfvni894hsa9E7" class="btn">📝 Register Now</a>
-
-  <p class="note">*Top 10 seats are filling fast. Secure your position today!</p>
-
+  <script>
+    function toggleHint() {
+      const content = document.getElementById("hint-content");
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 </html>
